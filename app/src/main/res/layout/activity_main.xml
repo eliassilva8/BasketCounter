@@ -123,6 +123,32 @@
         android:onClick="reset"
         android:layout_margin="8dp" />
 
+    <TextView
+        android:id="@+id/countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reset"
+        android:layout_centerHorizontal="true"
+        android:text="0:00:00"
+        android:textSize="56dp"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:layout_below="@id/countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/play"
+            android:onClick="startTimer"/>
+
+    </LinearLayout>
+
 </RelativeLayout>
 
 
