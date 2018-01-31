@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "70080258094",
+    "firebase_url": "https://courtcounter-2275c.firebaseio.com",
+    "project_id": "courtcounter-2275c",
+    "storage_bucket": "kasketcounter-2275c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70080258094:android:e22fb05040d1065c",
+        "android_client_info": {
+          "package_name": "com.ems.android.basketcounter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70080258094-p2qlrran3vjc64s8uhf55irj15v5o6ei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ems.android.basketcounter",
+            "certificate_hash": "4422664baf17ff705e7215e0e7072d15f88151eb"
+          }
+        },
+        {
+          "client_id": "70080258094-a8l7hklmnptr3cr80pse1bb4ut82nhd5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUSt0A9wP_rAa6lh_f6cJZCuwLR5Kft6E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70080258094-a8l7hklmnptr3cr80pse1bb4ut82nhd5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
