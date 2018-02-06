@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="left_team">Visitado</string>
+    <string name="right_team">Visitante</string>
+    <string name="FT">Lance Livre</string>
+    <string name="three_points">+3P</string>
+    <string name="two_points">+2P</string>
+    <string name="free_throw">LL</string>
+    <string name="foul">Falta</string>
+    <string name="time_per_quarter">Tempo por período</string>
+    <string name="bonus_situation">Penalidade</string>
+    <string name="confirm">Confirmar</string>
+    <string name="team_A">Equipa A</string>
+    <string name="reset">Repor</string>
+    <string name="team_B">Equipa B</string>
+    <string name="minutes_label">mins</string>
+    <string name="fouls_label">faltas</string>
+</resources>

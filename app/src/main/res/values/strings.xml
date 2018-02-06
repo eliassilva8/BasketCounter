@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">Court Counter</string>
+    <string name="app_name" translatable="false">BasketCounter</string>
+    <string name="left_team">Home</string>
+    <string name="right_team">Guest</string>
+    <string name="three_points">+3P</string>
+    <string name="two_points">+2P</string>
+    <string name="FT">Free Throw</string>
+    <string name="free_throw">FT</string>
+    <string name="foul">Foul</string>
+    <string name="reset">Reset</string>
+    <string name="time_per_quarter">Time per quarter</string>
+    <string name="bonus_situation">Bonus situation</string>
+    <string name="confirm">Confirm</string>
+    <string name="team_A">Team A</string>
+    <string name="team_B">Team B</string>
+    <string name="minutes_label">mins</string>
+    <string name="fouls_label">fouls</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.android.courtcounter;
+package com.ems.android.basketcounter;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,15 +30,15 @@ public class ConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setTitle(R.string.app_name);
 
-        mLeftTeam = (EditText) findViewById(R.id.et_left_team_name);
-        mRightTeam = (EditText) findViewById(R.id.et_right_team_name);
-        mTimePerQuarter = (EditText) findViewById(R.id.et_timer);
-        mBonus = (EditText) findViewById(R.id.et_bonus_situation);
+        mLeftTeam = findViewById(R.id.et_left_team_name);
+        mRightTeam = findViewById(R.id.et_right_team_name);
+        mTimePerQuarter = findViewById(R.id.et_timer);
+        mBonus = findViewById(R.id.et_bonus_situation);
     }
 
     /**
