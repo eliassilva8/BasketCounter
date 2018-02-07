@@ -1,0 +1,23 @@
+<resources>
+
+    <!-- Screen margins -->
+    <dimen name="default_margin">14dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="extra_small_margin">4dp</dimen>
+    <dimen name="button_min_height">24dp</dimen>
+    <dimen name="large_margin">24sp</dimen>
+    <dimen name="extra_large_margin">26sp</dimen>
+
+    <!-- Text sizes -->
+    <dimen name="team_name">18sp</dimen>
+    <dimen name="score_display">48sp</dimen>
+    <dimen name="button_text">14sp</dimen>
+    <dimen name="normal_text">15sp</dimen>
+    <dimen name="foul_display">14sp</dimen>
+    <dimen name="time_display">42sp</dimen>
+    <dimen name="team_name_landscape">18sp</dimen>
+    <dimen name="score_display_landscape">42sp</dimen>
+    <dimen name="time_display_landscape">34sp</dimen>
+
+
+</resources>
