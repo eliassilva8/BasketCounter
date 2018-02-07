@@ -15,4 +15,5 @@
     <string name="team_B">Team B</string>
     <string name="minutes_label">mins</string>
     <string name="fouls_label">fouls</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-7487555387883892~3043909438</string>
 </resources>
