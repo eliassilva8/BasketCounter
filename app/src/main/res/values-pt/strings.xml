@@ -2,7 +2,6 @@
 <resources>
     <string name="left_team">Visitado</string>
     <string name="right_team">Visitante</string>
-    <string name="FT">Lance Livre</string>
     <string name="three_points">+3P</string>
     <string name="two_points">+2P</string>
     <string name="free_throw">LL</string>
