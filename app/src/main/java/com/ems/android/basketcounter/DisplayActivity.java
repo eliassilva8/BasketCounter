@@ -1,15 +1,27 @@
 package com.ems.android.basketcounter;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ems.android.basketcounter.data.GameDbContract.GameEntry;
+import com.ems.android.basketcounter.data.GameDbHelper;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DisplayActivity extends AppCompatActivity {
-
     private int mScoreLeftTeam = 0;
     private int mScoreRightTeam = 0;
     private int mFoulsLeftTeam = 0;
@@ -29,6 +41,7 @@ public class DisplayActivity extends AppCompatActivity {
     private CountDownTimer mCountDownTimer;
     private long mTimeRemaining;
     private boolean isTimerPaused;
+    private GameDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +49,8 @@ public class DisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display);
 
         Intent intent = getIntent();
+
+        mDbHelper = new GameDbHelper(this);
 
         mTvLeftTeam = findViewById(R.id.tv_left_team);
         mTvLeftTeam.setText(intent.getExtras().getString(getString(R.string.left_team), getString(R.string.left_team)));
@@ -288,5 +303,46 @@ public class DisplayActivity extends AppCompatActivity {
     private Long minutesToMilliseconds(String minutes) {
         double minutesInDouble = Double.parseDouble(minutes);
         return (long) (60000 * minutesInDouble);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.display_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                saveGame();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void saveGame() {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date currentDate = new Date();
+        String date = dateFormat.format(currentDate);
+
+        ContentValues values = new ContentValues();
+        values.put(GameEntry.COLUMN_DATE, date);
+        values.put(GameEntry.COLUMN_HOME_TEAM, mTvLeftTeam.toString());
+        values.put(GameEntry.COLUMN_GUEST_TEAM, mTvRightTeam.toString());
+        values.put(GameEntry.COLUMN_HOME_POINTS, String.valueOf(mScoreLeftTeam));
+        values.put(GameEntry.COLUMN_GUEST_POINTS, String.valueOf(mScoreRightTeam));
+
+        long newRowId = db.insert(GameEntry.TABLE_NAME, null, values);
+
+        if (newRowId > -1) {
+            Toast.makeText(DisplayActivity.this, getString(R.string.game_saved), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(DisplayActivity.this, getString(R.string.error_saving_game), Toast.LENGTH_SHORT).show();
+        }
     }
 }
