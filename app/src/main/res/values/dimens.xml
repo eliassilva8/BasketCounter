@@ -18,6 +18,7 @@
     <dimen name="team_name_landscape">20sp</dimen>
     <dimen name="score_display_landscape">56sp</dimen>
     <dimen name="time_display_landscape">46sp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
 
 
 </resources>

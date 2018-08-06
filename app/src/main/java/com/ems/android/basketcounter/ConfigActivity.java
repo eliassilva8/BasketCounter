@@ -17,7 +17,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
  */
 
 public class ConfigActivity extends AppCompatActivity {
-
     private FirebaseAnalytics mFirebaseAnalytics;
     private AdView mAdView;
 
@@ -39,7 +38,7 @@ public class ConfigActivity extends AppCompatActivity {
 
         MobileAds.initialize(this, getString(R.string.ADMOB_APP_ID));
 
-        mAdView = findViewById(R.id.adView);
+        mAdView = findViewById(R.id.adView_config);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 

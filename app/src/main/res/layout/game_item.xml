@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/game_icon_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/game_icon_description"
+        android:padding="@dimen/extra_small_margin"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/home_team_name_lv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/extra_small_margin"
+        android:padding="@dimen/extra_small_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:layout_constraintEnd_toStartOf="@+id/vs_label"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Benfica" />
+
+    <TextView
+        android:id="@+id/home_team_points_lv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/extra_small_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/home_team_name_lv"
+        app:layout_constraintStart_toStartOf="@+id/home_team_name_lv"
+        app:layout_constraintTop_toBottomOf="@+id/home_team_name_lv"
+        tools:text="80" />
+
+    <ImageView
+        android:id="@+id/vs_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/midle_line"
+        app:layout_constraintStart_toStartOf="@+id/midle_line"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/guest_team_name_lv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/extra_small_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        app:layout_constraintStart_toEndOf="@+id/vs_label"
+        app:layout_constraintTop_toTopOf="@+id/home_team_name_lv"
+        tools:text="Rebordosa" />
+
+    <TextView
+        android:id="@+id/guest_team_points_lv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:padding="@dimen/extra_small_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/guest_team_name_lv"
+        app:layout_constraintStart_toStartOf="@+id/guest_team_name_lv"
+        app:layout_constraintTop_toBottomOf="@+id/guest_team_name_lv"
+        tools:text="81" />
+
+    <TextView
+        android:id="@+id/date_lv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:padding="@dimen/extra_small_margin"
+        android:textSize="9sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/game_icon_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/game_icon_iv"
+        tools:text="12/10/2018" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/midle_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="192dp" />
+
+</android.support.constraint.ConstraintLayout>

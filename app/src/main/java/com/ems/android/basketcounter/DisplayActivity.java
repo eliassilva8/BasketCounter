@@ -323,6 +323,9 @@ public class DisplayActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Saves the game in the database
+     */
     private void saveGame() {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
@@ -344,5 +347,11 @@ public class DisplayActivity extends AppCompatActivity {
         } else {
             Toast.makeText(DisplayActivity.this, getString(R.string.error_saving_game), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mDbHelper.close();
+        super.onDestroy();
     }
 }
