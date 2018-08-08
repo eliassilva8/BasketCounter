@@ -14,4 +14,7 @@
     <string name="team_B">Equipo B</string>
     <string name="minutes_label">mins</string>
     <string name="fouls_label">faltas</string>
+    <string name="won">ha ganado</string>
+    <string name="draw">Fue un empate!</string>
+    <string name="game_saved">Partido guardado!</string>
 </resources>

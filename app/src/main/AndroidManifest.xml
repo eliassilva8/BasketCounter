@@ -26,9 +26,11 @@
             android:parentActivityName=".MainActivity" />
 
         <provider
-            android:authorities="com.ems.android.basketcounter"
             android:name=".data.GameProvider"
+            android:authorities="com.ems.android.basketcounter"
             android:exported="false" />
+
+        <activity android:name=".DetailsActivity"></activity>
     </application>
 
 </manifest>

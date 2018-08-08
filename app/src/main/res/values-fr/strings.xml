@@ -14,4 +14,7 @@
     <string name="team_A">Équipe A</string>
     <string name="team_B">Équipe B</string>
     <string name="time_per_quarter">Temps par période</string>
+    <string name="won">a gagné!</string>
+    <string name="draw">C\'était une égalité!</string>
+    <string name="game_saved">Match enregistré!</string>
 </resources>

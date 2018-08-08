@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<GamePOJO>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<GamePOJO>>, GameAdapter.GameAdapterOnClickHandler {
     @BindView(R.id.new_game_fab)
     FloatingActionButton mNewGameFab;
     @BindView(R.id.games_rv)
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mGamesRecyclerView.setLayoutManager(mLayoutManager);
         mGamesRecyclerView.setHasFixedSize(true);
-        mGameAdapter = new GameAdapter();
+        mGameAdapter = new GameAdapter(this);
         mGamesRecyclerView.setAdapter(mGameAdapter);
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
@@ -70,5 +70,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<List<GamePOJO>> loader) {
         mGameAdapter.setGameData(null);
+    }
+
+    @Override
+    public void onClick(GamePOJO game) {
+        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+        intent.putExtra(getString(R.string.game_clicked), game);
+        startActivity(intent);
     }
 }

@@ -21,6 +21,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DisplayActivity extends AppCompatActivity {
     private int mScoreLeftTeam = 0;
     private int mScoreRightTeam = 0;
@@ -30,13 +33,24 @@ public class DisplayActivity extends AppCompatActivity {
     private int mBonusSituation = 0;
     private int mOverBonus = 0;
 
-    private TextView mTvLeftTeam;
-    private TextView mTvRightTeam;
-    private TextView mTvTimer;
-    private TextView tvFoulsLeft;
-    private TextView tvFoulsRight;
-    private ImageButton btPauseTimer;
-    private ImageButton btPlayTimer;
+    @BindView(R.id.tv_left_team)
+    TextView mTvLeftTeam;
+    @BindView(R.id.tv_right_team)
+    TextView mTvRightTeam;
+    @BindView(R.id.tv_score_left)
+    TextView mTvLeftScore;
+    @BindView(R.id.tv_score_right)
+    TextView mTvRightScore;
+    @BindView(R.id.tv_quarter_time_display)
+    TextView mTvTimer;
+    @BindView(R.id.tv_foul_left)
+    TextView tvFoulsLeft;
+    @BindView(R.id.tv_foul_right)
+    TextView tvFoulsRight;
+    @BindView(R.id.bt_pause_timer)
+    ImageButton btPauseTimer;
+    @BindView(R.id.bt_play_timer)
+    ImageButton btPlayTimer;
 
     private CountDownTimer mCountDownTimer;
     private long mTimeRemaining;
@@ -47,28 +61,18 @@ public class DisplayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
-
-        Intent intent = getIntent();
+        ButterKnife.bind(this);
 
         mDbHelper = new GameDbHelper(this);
 
-        mTvLeftTeam = findViewById(R.id.tv_left_team);
+        Intent intent = getIntent();
         mTvLeftTeam.setText(intent.getExtras().getString(getString(R.string.left_team), getString(R.string.left_team)));
-
-        mTvRightTeam = findViewById(R.id.tv_right_team);
         mTvRightTeam.setText(intent.getExtras().getString(getString(R.string.right_team), getString(R.string.right_team)));
-
-        tvFoulsLeft = findViewById(R.id.tv_foul_left);
-        tvFoulsRight = findViewById(R.id.tv_foul_right);
         mBonusSituation = Integer.parseInt(intent.getExtras().getString(getString(R.string.bonus_situation), "4"));
         mOverBonus = mBonusSituation + 1;
-
-        mTvTimer = findViewById(R.id.tv_quarter_time_display);
         String timeString = intent.getExtras().getString(getString(R.string.time_per_quarter), "10");
         mQuarterTime = minutesToMilliseconds(timeString);
         mTvTimer.setText(formatTime(mQuarterTime));
-
-        btPauseTimer = findViewById(R.id.bt_pause_timer);
         btPauseTimer.setVisibility(View.INVISIBLE);
     }
 
@@ -150,52 +154,29 @@ public class DisplayActivity extends AppCompatActivity {
     }
 
     /**
-     * Displays the score or the fouls at the moment
-     *
-     * @param score/fouls - current number of points/fouls
-     */
-    private void displayScoreLeftTeam(int score) {
-        TextView scoreView = findViewById(R.id.tv_score_left);
-        scoreView.setText(String.valueOf(score));
-    }
-
-    private void displayScoreRightTeam(int score) {
-        TextView scoreView = findViewById(R.id.tv_score_right);
-        scoreView.setText(String.valueOf(score));
-    }
-
-    private void displayFoulsLeftTeam(int fouls) {
-        tvFoulsLeft.setText(String.valueOf(fouls));
-    }
-
-    private void displayFoulsRightTeam(int fouls) {
-        tvFoulsRight.setText(String.valueOf(fouls));
-    }
-
-    /**
      * Adds the specific number of points/fouls
      *
      * @param view
      */
     public void threePointLeftClicked(View view) {
         mScoreLeftTeam += 3;
-        displayScoreLeftTeam(mScoreLeftTeam);
+        mTvLeftScore.setText(String.valueOf(mScoreLeftTeam));
     }
 
     public void twoPointLeftClicked(View view) {
         mScoreLeftTeam += 2;
-        displayScoreLeftTeam(mScoreLeftTeam);
+        mTvLeftScore.setText(String.valueOf(mScoreLeftTeam));
     }
 
     public void freeThrowLeftClicked(View view) {
         mScoreLeftTeam++;
-        displayScoreLeftTeam(mScoreLeftTeam);
+        mTvLeftScore.setText(String.valueOf(mScoreLeftTeam));
     }
 
     public void minusPointLeftClicked(View view) {
         if (mScoreLeftTeam > 0) {
             mScoreLeftTeam--;
-            displayScoreLeftTeam(mScoreLeftTeam);
+            mTvLeftScore.setText(String.valueOf(mScoreLeftTeam));
         }
     }
 
@@ -203,15 +184,11 @@ public class DisplayActivity extends AppCompatActivity {
         mFoulsLeftTeam++;
         if (mFoulsLeftTeam == mBonusSituation) {
             tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-            displayFoulsLeftTeam(mFoulsLeftTeam);
         } else if (mFoulsLeftTeam > mBonusSituation) {
             tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             mFoulsLeftTeam = mOverBonus;
-            displayFoulsLeftTeam(mOverBonus);
-        } else {
-            displayFoulsLeftTeam(mFoulsLeftTeam);
         }
-
+        tvFoulsLeft.setText(String.valueOf(mFoulsLeftTeam));
     }
 
     public void minusFoulLeftClicked(View view) {
@@ -223,28 +200,28 @@ public class DisplayActivity extends AppCompatActivity {
                 tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorAccentLight));
             }
         }
-        displayFoulsLeftTeam(mFoulsLeftTeam);
+        tvFoulsLeft.setText(String.valueOf(mFoulsLeftTeam));
     }
 
     public void threePointRightClicked(View view) {
         mScoreRightTeam += 3;
-        displayScoreRightTeam(mScoreRightTeam);
+        mTvRightScore.setText(String.valueOf(mScoreRightTeam));
     }
 
     public void twoPointRightClicked(View view) {
         mScoreRightTeam += 2;
-        displayScoreRightTeam(mScoreRightTeam);
+        mTvRightScore.setText(String.valueOf(mScoreRightTeam));
     }
 
     public void freeThrowRightClicked(View view) {
         mScoreRightTeam++;
-        displayScoreRightTeam(mScoreRightTeam);
+        mTvRightScore.setText(String.valueOf(mScoreRightTeam));
     }
 
     public void minusPointRightClicked(View view) {
         if (mScoreRightTeam > 0) {
             mScoreRightTeam--;
-            displayScoreRightTeam(mScoreRightTeam);
+            mTvRightScore.setText(String.valueOf(mScoreRightTeam));
         }
     }
 
@@ -252,14 +229,11 @@ public class DisplayActivity extends AppCompatActivity {
         mFoulsRightTeam++;
         if (mFoulsRightTeam == mBonusSituation) {
             tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-            displayFoulsRightTeam(mFoulsRightTeam);
         } else if (mFoulsRightTeam > mBonusSituation) {
             tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             mFoulsRightTeam = mOverBonus;
-            displayFoulsRightTeam(mOverBonus);
-        } else {
-            displayFoulsRightTeam(mFoulsRightTeam);
         }
+        tvFoulsRight.setText(String.valueOf(mFoulsRightTeam));
 
     }
 
@@ -272,7 +246,7 @@ public class DisplayActivity extends AppCompatActivity {
                 tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorAccentLight));
             }
         }
-        displayFoulsRightTeam(mFoulsRightTeam);
+        tvFoulsRight.setText(String.valueOf(mFoulsRightTeam));
     }
 
     /**
@@ -285,10 +259,10 @@ public class DisplayActivity extends AppCompatActivity {
         mScoreRightTeam = 0;
         mFoulsLeftTeam = 0;
         mFoulsRightTeam = 0;
-        displayScoreLeftTeam(mScoreLeftTeam);
-        displayScoreRightTeam(mScoreRightTeam);
-        displayFoulsLeftTeam(mFoulsLeftTeam);
-        displayFoulsRightTeam(mFoulsRightTeam);
+        mTvLeftScore.setText(String.valueOf(mScoreLeftTeam));
+        mTvRightScore.setText(String.valueOf(mScoreRightTeam));
+        tvFoulsLeft.setText(String.valueOf(mFoulsLeftTeam));
+        tvFoulsRight.setText(String.valueOf(mFoulsRightTeam));
         tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorAccentLight));
         tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorAccentLight));
         restartTimer(view);
@@ -335,8 +309,8 @@ public class DisplayActivity extends AppCompatActivity {
 
         ContentValues values = new ContentValues();
         values.put(GameEntry.COLUMN_DATE, date);
-        values.put(GameEntry.COLUMN_HOME_TEAM, mTvLeftTeam.toString());
-        values.put(GameEntry.COLUMN_GUEST_TEAM, mTvRightTeam.toString());
+        values.put(GameEntry.COLUMN_HOME_TEAM, mTvLeftTeam.getText().toString());
+        values.put(GameEntry.COLUMN_GUEST_TEAM, mTvRightTeam.getText().toString());
         values.put(GameEntry.COLUMN_HOME_POINTS, String.valueOf(mScoreLeftTeam));
         values.put(GameEntry.COLUMN_GUEST_POINTS, String.valueOf(mScoreRightTeam));
 
@@ -344,6 +318,8 @@ public class DisplayActivity extends AppCompatActivity {
 
         if (newRowId > -1) {
             Toast.makeText(DisplayActivity.this, getString(R.string.game_saved), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
+            startActivity(intent);
         } else {
             Toast.makeText(DisplayActivity.this, getString(R.string.error_saving_game), Toast.LENGTH_SHORT).show();
         }

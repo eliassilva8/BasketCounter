@@ -20,16 +20,29 @@ public final class GameDbContract {
                 .build();
 
         public static final String TABLE_NAME = PATH_GAMES;
+        public static final String _ID = BaseColumns._ID;
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_HOME_TEAM = "home";
         public static final String COLUMN_GUEST_TEAM = "guest";
         public static final String COLUMN_HOME_POINTS = "home_points";
         public static final String COLUMN_GUEST_POINTS = "guest_points";
+
+        /**
+         * Builds a URI that adds the game id to the end of the favorites content URI path.
+         *
+         * @param gameId
+         * @return Uri to query details about a single game entry
+         */
+        public static Uri buildGameUri(int gameId) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath(Long.toString(gameId))
+                    .build();
+        }
     }
 
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + GameEntry.TABLE_NAME + " (" +
-                    GameEntry._ID + " INTEGER PRIMARY KEY," +
+                    GameEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     GameEntry.COLUMN_DATE + " TEXT," +
                     GameEntry.COLUMN_HOME_TEAM + " TEXT," +
                     GameEntry.COLUMN_GUEST_TEAM + " TEXT," +

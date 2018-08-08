@@ -17,8 +17,11 @@
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-7487555387883892/1572358742</string>
     <string name="ADMOB_APP_ID" translatable="false">ca-app-pub-7487555387883892~3043909438</string>
     <string name="save_game">Save game</string>
-    <string name="game_saved">Game saved!</string>
+    <string name="game_saved">Match saved!</string>
     <string name="error_saving_game">Error trying to save the game!</string>
     <string name="game_icon_description">Game icon</string>
     <string name="vs">VS</string>
+    <string name="game_clicked">game_clicked</string>
+    <string name="won">won!</string>
+    <string name="draw">Was a draw!</string>
 </resources>

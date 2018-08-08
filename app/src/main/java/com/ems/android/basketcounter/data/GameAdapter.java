@@ -20,6 +20,15 @@ import butterknife.ButterKnife;
  */
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
     private List<GamePOJO> mGames;
+    final private GameAdapterOnClickHandler mClickHandler;
+
+    public GameAdapter(GameAdapterOnClickHandler clickHandler) {
+        this.mClickHandler = clickHandler;
+    }
+
+    public interface GameAdapterOnClickHandler {
+        void onClick(GamePOJO game);
+    }
 
     @NonNull
     @Override
@@ -53,7 +62,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         notifyDataSetChanged();
     }
 
-    public class GameViewHolder extends RecyclerView.ViewHolder {
+    public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.date_lv)
         TextView mDateItem;
         @BindView(R.id.home_team_name_lv)
@@ -68,6 +77,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         public GameViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            GamePOJO gameClicked = mGames.get(getAdapterPosition());
+            mClickHandler.onClick(gameClicked);
         }
     }
 }
