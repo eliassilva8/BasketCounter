@@ -17,4 +17,7 @@
     <string name="won">a gagné!</string>
     <string name="draw">C\'était une égalité!</string>
     <string name="game_saved">Match enregistré!</string>
+    <string name="first_quarter">1Q</string>
+    <string name="quarter">Q</string>
+    <string name="over_time">PR</string>
 </resources>

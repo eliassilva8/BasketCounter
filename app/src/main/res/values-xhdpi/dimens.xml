@@ -14,7 +14,7 @@
     <dimen name="button_text">15sp</dimen>
     <dimen name="normal_text">18sp</dimen>
     <dimen name="foul_display">18sp</dimen>
-    <dimen name="time_display">52sp</dimen>
+    <dimen name="time_display">48sp</dimen>
     <dimen name="team_name_landscape">20sp</dimen>
     <dimen name="score_display_landscape">56sp</dimen>
     <dimen name="time_display_landscape">46sp</dimen>
