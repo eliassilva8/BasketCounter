@@ -33,10 +33,6 @@
             android:authorities="com.ems.android.basketcounter"
             android:exported="false" />
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider{255224438632587}"
-            android:name="com.facebook.FacebookContentProvider"
-            android:exported="true"/>
-
         <activity android:name=".DetailsActivity"></activity>
     </application>
 
