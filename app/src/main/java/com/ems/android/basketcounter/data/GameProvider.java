@@ -18,10 +18,12 @@ public class GameProvider extends ContentProvider {
     private int rowsDeleted;
     private GameDbHelper mDbHelper;
     private static final int GAMES = 100;
+    private static final int GAME_ID = 101;
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(GameDbContract.CONTENT_AUTHORITY, GameDbContract.PATH_GAMES, GAMES);
+        sUriMatcher.addURI(GameDbContract.CONTENT_AUTHORITY, GameDbContract.PATH_GAMES + "/#", GAME_ID);
     }
 
     @Override
@@ -79,11 +81,15 @@ public class GameProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case GAMES:
-                rowsDeleted = database.delete(GameDbContract.GameEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case GAME_ID:
+                selection = GameDbContract.GameEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 break;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
         }
+        rowsDeleted = database.delete(GameDbContract.GameEntry.TABLE_NAME, selection, selectionArgs);
         return rowsDeleted;
     }
 

@@ -17,4 +17,8 @@
     <string name="won">ha ganado</string>
     <string name="draw">Fue un empate!</string>
     <string name="game_saved">Partido guardado!</string>
+    <string name="first_quarter">1C</string>
+    <string name="quarter">C</string>
+    <string name="over_time">TS</string>
+    <string name="game_deleted">Partido eliminado!</string>
 </resources>
