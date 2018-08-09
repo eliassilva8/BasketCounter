@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,6 +33,7 @@ public class DisplayActivity extends AppCompatActivity {
     private long mQuarterTime = 0;
     private int mBonusSituation = 0;
     private int mOverBonus = 0;
+    private int mQuarter = 1;
 
     @BindView(R.id.tv_left_team)
     TextView mTvLeftTeam;
@@ -51,6 +53,8 @@ public class DisplayActivity extends AppCompatActivity {
     ImageButton btPauseTimer;
     @BindView(R.id.bt_play_timer)
     ImageButton btPlayTimer;
+    @BindView(R.id.quarter_tv)
+    TextView mQuarterTv;
 
     private CountDownTimer mCountDownTimer;
     private long mTimeRemaining;
@@ -88,9 +92,9 @@ public class DisplayActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                mTvTimer.setText(formatTime(0));
-                btPlayTimer.setVisibility(View.INVISIBLE);
+                mTvTimer.setText(formatTime(mQuarterTime));
                 btPauseTimer.setVisibility(View.INVISIBLE);
+                btPlayTimer.setVisibility(View.VISIBLE);
             }
         };
     }
@@ -247,6 +251,24 @@ public class DisplayActivity extends AppCompatActivity {
             }
         }
         tvFoulsRight.setText(String.valueOf(mFoulsRightTeam));
+    }
+
+    public void quarterButtonClicked(View view) {
+        Log.d(String.valueOf(view.getId()), String.valueOf(R.id.bt_minus_quarter));
+        if (view.getId() == R.id.bt_minus_quarter && mQuarter > 1) {
+            mQuarter--;
+        } else if (view.getId() == R.id.bt_plus_quarter && mQuarter < 5) {
+            mQuarter++;
+        }
+        displayQuarter();
+    }
+
+    public void displayQuarter() {
+        if (mQuarter == 5) {
+            mQuarterTv.setText(getString(R.string.over_time));
+        } else {
+            mQuarterTv.setText(String.valueOf(mQuarter) + getString(R.string.quarter));
+        }
     }
 
     /**
