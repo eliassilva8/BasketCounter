@@ -27,4 +27,6 @@
     <string name="first_quarter">1Q</string>
     <string name="quarter">Q</string>
     <string name="over_time">OT</string>
+    <string name="delete_game">Delete match</string>
+    <string name="game_deleted">Match deleted!</string>
 </resources>
