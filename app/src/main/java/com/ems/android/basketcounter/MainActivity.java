@@ -14,6 +14,9 @@ import com.ems.android.basketcounter.data.GameAdapter;
 import com.ems.android.basketcounter.data.GameDbContract;
 import com.ems.android.basketcounter.data.GameLoader;
 import com.ems.android.basketcounter.data.GamePOJO;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     FloatingActionButton mNewGameFab;
     @BindView(R.id.games_rv)
     RecyclerView mGamesRecyclerView;
+    @BindView(R.id.adView_main)
+    AdView mMainAdView;
     private static final int LOADER_ID = 100;
     private GameAdapter mGameAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -35,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        MobileAds.initialize(this, getString(R.string.ADMOB_APP_ID));
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mMainAdView.loadAd(adRequest);
 
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mGamesRecyclerView.setLayoutManager(mLayoutManager);
