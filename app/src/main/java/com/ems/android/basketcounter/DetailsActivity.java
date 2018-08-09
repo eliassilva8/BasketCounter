@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.ems.android.basketcounter.data.GameDbContract;
 import com.ems.android.basketcounter.data.GamePOJO;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +32,8 @@ public class DetailsActivity extends AppCompatActivity {
     TextView mGuestScore;
     @BindView(R.id.winner_text)
     TextView mWinnerString;
+    @BindView(R.id.adView_details)
+    AdView mDetailsAdView;
 
     GamePOJO mGame;
 
@@ -38,6 +42,9 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mDetailsAdView.loadAd(adRequest);
 
         Intent intent = getIntent();
         mGame = intent.getParcelableExtra(getString(R.string.game_clicked));

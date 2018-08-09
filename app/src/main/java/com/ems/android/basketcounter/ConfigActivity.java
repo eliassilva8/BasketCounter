@@ -9,22 +9,28 @@ import android.widget.EditText;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Elias on 19/01/2018.
  */
 
 public class ConfigActivity extends AppCompatActivity {
+    @BindView(R.id.et_left_team_name)
+    EditText mLeftTeam;
+    @BindView(R.id.et_right_team_name)
+    EditText mRightTeam;
+    @BindView(R.id.et_timer)
+    EditText mTimePerQuarter;
+    @BindView(R.id.et_bonus_situation)
+    EditText mBonus;
+    @BindView(R.id.adView_config)
+    AdView mConfigAdView;
+
     private FirebaseAnalytics mFirebaseAnalytics;
-    private AdView mAdView;
-
-    private EditText mLeftTeam;
-    private EditText mRightTeam;
-    private EditText mTimePerQuarter;
-    private EditText mBonus;
-
     private String mLeftTeamString;
     private String mRightTeamString;
     private String mTimeString;
@@ -35,20 +41,13 @@ public class ConfigActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
+        ButterKnife.bind(this);
 
-        MobileAds.initialize(this, getString(R.string.ADMOB_APP_ID));
-
-        mAdView = findViewById(R.id.adView_config);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mConfigAdView.loadAd(adRequest);
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
-        mLeftTeam = findViewById(R.id.et_left_team_name);
-        mRightTeam = findViewById(R.id.et_right_team_name);
-        mTimePerQuarter = findViewById(R.id.et_timer);
-        mBonus = findViewById(R.id.et_bonus_situation);
     }
 
     /**

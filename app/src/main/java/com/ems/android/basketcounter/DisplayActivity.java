@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import com.ems.android.basketcounter.data.GameDbContract.GameEntry;
 import com.ems.android.basketcounter.data.GameDbHelper;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,6 +37,7 @@ public class DisplayActivity extends AppCompatActivity {
     private int mBonusSituation = 0;
     private int mOverBonus = 0;
     private int mQuarter = 1;
+    private InterstitialAd mInterstitial;
 
     @BindView(R.id.tv_left_team)
     TextView mTvLeftTeam;
@@ -66,6 +70,19 @@ public class DisplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
         ButterKnife.bind(this);
+
+        mInterstitial = new InterstitialAd(this);
+        mInterstitial.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mInterstitial.loadAd(adRequest);
+
+        mInterstitial.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mDbHelper = new GameDbHelper(this);
 
@@ -340,8 +357,9 @@ public class DisplayActivity extends AppCompatActivity {
 
         if (newRowId > -1) {
             Toast.makeText(DisplayActivity.this, getString(R.string.game_saved), Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
-            startActivity(intent);
+            if (mInterstitial.isLoaded()) {
+                mInterstitial.show();
+            }
         } else {
             Toast.makeText(DisplayActivity.this, getString(R.string.error_saving_game), Toast.LENGTH_SHORT).show();
         }
