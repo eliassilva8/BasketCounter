@@ -16,7 +16,7 @@
     <string name="fouls_label">fouls</string>
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-7487555387883892/1572358742</string>
     <string name="ADMOB_APP_ID" translatable="false">ca-app-pub-7487555387883892~3043909438</string>
-    <string name="save_game">Save game</string>
+    <string name="save_game" translatable="false">Save game</string>
     <string name="game_saved">Match saved!</string>
     <string name="error_saving_game">Error trying to save the game!</string>
     <string name="game_icon_description">Game icon</string>
@@ -27,6 +27,7 @@
     <string name="first_quarter">1Q</string>
     <string name="quarter">Q</string>
     <string name="over_time">OT</string>
-    <string name="delete_game">Delete match</string>
+    <string name="delete_game" translatable="false">Delete match</string>
     <string name="game_deleted">Match deleted!</string>
+    <string name="facebook_app_id" translatable="false">255224438632587</string>
 </resources>
