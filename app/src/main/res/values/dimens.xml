@@ -19,6 +19,7 @@
     <dimen name="score_display_landscape">56sp</dimen>
     <dimen name="time_display_landscape">46sp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="item_text">14sp</dimen>
 
 
 </resources>
