@@ -13,8 +13,10 @@ import android.widget.Toast;
 
 import com.ems.android.basketcounter.data.GameDbContract;
 import com.ems.android.basketcounter.data.GamePOJO;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +38,7 @@ public class DetailsActivity extends AppCompatActivity {
     AdView mDetailsAdView;
 
     GamePOJO mGame;
+    private InterstitialAd mInterstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +46,22 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
 
+        mInterstitial = new InterstitialAd(this);
+        mInterstitial.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+        AdRequest adRequest2 = new AdRequest.Builder().build();
+        mInterstitial.loadAd(adRequest2);
+
         AdRequest adRequest = new AdRequest.Builder().build();
         mDetailsAdView.loadAd(adRequest);
+
+        mInterstitial.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                Toast.makeText(DetailsActivity.this, getString(R.string.game_deleted), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Intent intent = getIntent();
         mGame = intent.getParcelableExtra(getString(R.string.game_clicked));
@@ -77,7 +94,9 @@ public class DetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete:
-                deleteMatch();
+                if (mInterstitial.isLoaded()) {
+                    deleteMatch();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -88,8 +107,6 @@ public class DetailsActivity extends AppCompatActivity {
         ContentResolver contentResolver = getContentResolver();
         Uri uri = GameDbContract.GameEntry.buildGameUri(mGame.getId());
         contentResolver.delete(uri, null, null);
-        Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
-        startActivity(intent);
-        Toast.makeText(DetailsActivity.this, getString(R.string.game_deleted), Toast.LENGTH_SHORT).show();
+        mInterstitial.show();
     }
 }

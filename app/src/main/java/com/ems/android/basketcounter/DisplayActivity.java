@@ -329,7 +329,10 @@ public class DisplayActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                saveGame();
+                if (mInterstitial.isLoaded()) {
+                    saveGame();
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -357,9 +360,8 @@ public class DisplayActivity extends AppCompatActivity {
 
         if (newRowId > -1) {
             Toast.makeText(DisplayActivity.this, getString(R.string.game_saved), Toast.LENGTH_SHORT).show();
-            if (mInterstitial.isLoaded()) {
-                mInterstitial.show();
-            }
+            mInterstitial.show();
+
         } else {
             Toast.makeText(DisplayActivity.this, getString(R.string.error_saving_game), Toast.LENGTH_SHORT).show();
         }
