@@ -42,6 +42,9 @@ public class ConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mConfigAdView.loadAd(adRequest);

@@ -71,6 +71,9 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         mInterstitial = new InterstitialAd(this);
         mInterstitial.setAdUnitId(getString(R.string.interstitial_ad_unit_id));

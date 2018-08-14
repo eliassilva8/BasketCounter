@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         MobileAds.initialize(this, getString(R.string.ADMOB_APP_ID));
         AdRequest adRequest = new AdRequest.Builder().build();
