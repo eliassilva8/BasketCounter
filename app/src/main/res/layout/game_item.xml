@@ -8,18 +8,19 @@
     android:layout_margin="@dimen/extra_small_margin"
     android:paddingTop="@dimen/small_margin"
     android:paddingBottom="@dimen/small_margin"
-    android:paddingStart="@dimen/default_margin"
-    android:paddingEnd="@dimen/default_margin">
+    android:paddingStart="@dimen/small_margin"
+    android:paddingEnd="@dimen/small_margin">
 
     <ImageView
         android:id="@+id/game_icon_iv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/game_icon_description"
         android:src="@mipmap/ic_logo_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/date_lv"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -46,14 +47,17 @@
 
         <TextView
             android:id="@+id/home_team_name_lv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginStart="8dp"
             android:ellipsize="end"
-            android:maxLength="12"
+            android:gravity="center"
+            android:maxLines="1"
             android:padding="@dimen/extra_small_margin"
             android:textSize="@dimen/item_text"
             app:layout_constraintEnd_toStartOf="@+id/vs_label"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Benfica" />
 
@@ -83,13 +87,16 @@
 
         <TextView
             android:id="@+id/guest_team_name_lv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="@dimen/default_margin"
             android:ellipsize="end"
-            android:maxLength="12"
+            android:gravity="center"
+            android:maxLines="1"
             android:padding="@dimen/extra_small_margin"
             android:textSize="@dimen/item_text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/vs_label"
             app:layout_constraintTop_toTopOf="@+id/home_team_name_lv"
             tools:text="Rebordosa" />

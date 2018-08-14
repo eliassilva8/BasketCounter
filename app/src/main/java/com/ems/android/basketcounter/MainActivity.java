@@ -14,6 +14,7 @@ import com.ems.android.basketcounter.data.GameAdapter;
 import com.ems.android.basketcounter.data.GameDbContract;
 import com.ems.android.basketcounter.data.GameLoader;
 import com.ems.android.basketcounter.data.GamePOJO;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -44,6 +45,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         MobileAds.initialize(this, getString(R.string.ADMOB_APP_ID));
         AdRequest adRequest = new AdRequest.Builder().build();
         mMainAdView.loadAd(adRequest);
+        mMainAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                mMainAdView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                mMainAdView.setVisibility(View.GONE);
+            }
+        });
 
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mGamesRecyclerView.setLayoutManager(mLayoutManager);

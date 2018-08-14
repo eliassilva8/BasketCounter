@@ -21,4 +21,6 @@
     <string name="quarter">C</string>
     <string name="over_time">TS</string>
     <string name="game_deleted">Partido eliminado!</string>
+    <string name="action_cannot_be_executed">La acción no se puede ejecutar en este momento. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="connect_to_internet">Por favor, conéctese a internet para continuar.</string>
 </resources>

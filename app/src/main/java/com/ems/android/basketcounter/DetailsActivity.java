@@ -2,6 +2,8 @@ package com.ems.android.basketcounter;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.ems.android.basketcounter.data.GameDbContract;
 import com.ems.android.basketcounter.data.GamePOJO;
+import com.ems.android.basketcounter.utils.NetworkReceiver;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -21,7 +24,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity implements NetworkReceiver.NetworkReceiverListener {
     @BindView(R.id.date_details_activity)
     TextView mDate;
     @BindView(R.id.tv_left_team_details)
@@ -39,6 +42,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     GamePOJO mGame;
     private InterstitialAd mInterstitial;
+    private NetworkReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +52,6 @@ public class DetailsActivity extends AppCompatActivity {
 
         mInterstitial = new InterstitialAd(this);
         mInterstitial.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
-        AdRequest adRequest2 = new AdRequest.Builder().build();
-        mInterstitial.loadAd(adRequest2);
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mDetailsAdView.loadAd(adRequest);
 
         mInterstitial.setAdListener(new AdListener() {
             @Override
@@ -62,6 +61,11 @@ public class DetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        mReceiver = new NetworkReceiver();
+        this.registerReceiver(mReceiver, filter);
+        mReceiver.setNetworkReceiverListener(this);
 
         Intent intent = getIntent();
         mGame = intent.getParcelableExtra(getString(R.string.game_clicked));
@@ -94,10 +98,14 @@ public class DetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete:
-                if (mInterstitial.isLoaded()) {
-                    deleteMatch();
+                if (mReceiver.isConnected(this)) {
+                    if (mInterstitial.isLoaded()) {
+                        deleteMatch();
+                    }
+                    return true;
+                } else {
+                    Toast.makeText(DetailsActivity.this, getString(R.string.connect_to_internet), Toast.LENGTH_LONG).show();
                 }
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -108,5 +116,16 @@ public class DetailsActivity extends AppCompatActivity {
         Uri uri = GameDbContract.GameEntry.buildGameUri(mGame.getId());
         contentResolver.delete(uri, null, null);
         mInterstitial.show();
+    }
+
+    @Override
+    public void onConnectionChange(boolean isConnected) {
+        if (mReceiver.isConnected(this)) {
+            AdRequest adInterstitialRequest = new AdRequest.Builder().build();
+            mInterstitial.loadAd(adInterstitialRequest);
+
+            AdRequest adBannerRequest = new AdRequest.Builder().build();
+            mDetailsAdView.loadAd(adBannerRequest);
+        }
     }
 }
