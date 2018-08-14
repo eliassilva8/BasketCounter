@@ -17,7 +17,7 @@
     <dimen name="time_display">42sp</dimen>
     <dimen name="team_name_landscape">18sp</dimen>
     <dimen name="score_display_landscape">42sp</dimen>
-    <dimen name="time_display_landscape">34sp</dimen>
+    <dimen name="time_display_landscape">32sp</dimen>
 
 
 </resources>

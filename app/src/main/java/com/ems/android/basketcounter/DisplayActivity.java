@@ -35,7 +35,6 @@ public class DisplayActivity extends AppCompatActivity {
     private int mFoulsRightTeam = 0;
     private long mQuarterTime = 0;
     private int mBonusSituation = 0;
-    private int mOverBonus = 0;
     private int mQuarter = 1;
     private InterstitialAd mInterstitial;
 
@@ -90,7 +89,6 @@ public class DisplayActivity extends AppCompatActivity {
         mTvLeftTeam.setText(intent.getExtras().getString(getString(R.string.left_team), getString(R.string.left_team)));
         mTvRightTeam.setText(intent.getExtras().getString(getString(R.string.right_team), getString(R.string.right_team)));
         mBonusSituation = Integer.parseInt(intent.getExtras().getString(getString(R.string.bonus_situation), "4"));
-        mOverBonus = mBonusSituation + 1;
         String timeString = intent.getExtras().getString(getString(R.string.time_per_quarter), "10");
         mQuarterTime = minutesToMilliseconds(timeString);
         mTvTimer.setText(formatTime(mQuarterTime));
@@ -203,11 +201,9 @@ public class DisplayActivity extends AppCompatActivity {
 
     public void foulsLeftClicked(View view) {
         mFoulsLeftTeam++;
-        if (mFoulsLeftTeam == mBonusSituation) {
-            tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-        } else if (mFoulsLeftTeam > mBonusSituation) {
-            tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-            mFoulsLeftTeam = mOverBonus;
+        if (mFoulsLeftTeam >= mBonusSituation) {
+            tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            mFoulsLeftTeam = mBonusSituation;
         }
         tvFoulsLeft.setText(String.valueOf(mFoulsLeftTeam));
     }
@@ -215,10 +211,10 @@ public class DisplayActivity extends AppCompatActivity {
     public void minusFoulLeftClicked(View view) {
         if (mFoulsLeftTeam > 0) {
             mFoulsLeftTeam--;
-            if (mFoulsLeftTeam == mBonusSituation) {
+            if (mFoulsLeftTeam < mBonusSituation) {
                 tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
             } else {
-                tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorAccentLight));
+                tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             }
         }
         tvFoulsLeft.setText(String.valueOf(mFoulsLeftTeam));
@@ -248,11 +244,9 @@ public class DisplayActivity extends AppCompatActivity {
 
     public void foulsRightClicked(View view) {
         mFoulsRightTeam++;
-        if (mFoulsRightTeam == mBonusSituation) {
-            tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-        } else if (mFoulsRightTeam > mBonusSituation) {
-            tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-            mFoulsRightTeam = mOverBonus;
+        if (mFoulsRightTeam >= mBonusSituation) {
+            tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            mFoulsRightTeam = mBonusSituation;
         }
         tvFoulsRight.setText(String.valueOf(mFoulsRightTeam));
 
@@ -261,10 +255,10 @@ public class DisplayActivity extends AppCompatActivity {
     public void minusFoulRightClicked(View view) {
         if (mFoulsRightTeam > 0) {
             mFoulsRightTeam--;
-            if (mFoulsRightTeam == mBonusSituation) {
+            if (mFoulsRightTeam < mBonusSituation) {
                 tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
             } else {
-                tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorAccentLight));
+                tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             }
         }
         tvFoulsRight.setText(String.valueOf(mFoulsRightTeam));
@@ -302,8 +296,8 @@ public class DisplayActivity extends AppCompatActivity {
         mTvRightScore.setText(String.valueOf(mScoreRightTeam));
         tvFoulsLeft.setText(String.valueOf(mFoulsLeftTeam));
         tvFoulsRight.setText(String.valueOf(mFoulsRightTeam));
-        tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorAccentLight));
-        tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorAccentLight));
+        tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+        tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
         restartTimer(view);
     }
 
