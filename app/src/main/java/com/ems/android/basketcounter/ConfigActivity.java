@@ -18,7 +18,6 @@ import butterknife.ButterKnife;
 /**
  * Created by Elias on 19/01/2018.
  */
-
 public class ConfigActivity extends AppCompatActivity {
     @BindView(R.id.et_left_team_name)
     EditText mLeftTeam;
@@ -38,7 +37,6 @@ public class ConfigActivity extends AppCompatActivity {
     private String mRightTeamString;
     private String mTimeString;
     private String mBonusString;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
