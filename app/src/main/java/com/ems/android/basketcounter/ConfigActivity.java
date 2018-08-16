@@ -3,6 +3,7 @@ package com.ems.android.basketcounter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -29,6 +30,8 @@ public class ConfigActivity extends AppCompatActivity {
     EditText mBonus;
     @BindView(R.id.adView_config)
     AdView mConfigAdView;
+    @BindView(R.id.confirm_fab)
+    FloatingActionButton mConfirmFab;
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private String mLeftTeamString;
@@ -51,26 +54,23 @@ public class ConfigActivity extends AppCompatActivity {
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-    }
 
-    /**
-     * Sends the data from the user input to the main activity
-     *
-     * @param view
-     */
-    public void confirm(View view) {
+        mConfirmFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "confirm");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "confirm");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-        manageUserInput();
-        Intent intent = new Intent(this, DisplayActivity.class);
-        intent.putExtra(getString(R.string.left_team), mLeftTeamString);
-        intent.putExtra(getString(R.string.right_team), mRightTeamString);
-        intent.putExtra(getString(R.string.time_per_quarter), mTimeString);
-        intent.putExtra(getString(R.string.bonus_situation), mBonusString);
-        startActivity(intent);
+                manageUserInput();
+                Intent intent = new Intent(ConfigActivity.this, DisplayActivity.class);
+                intent.putExtra(getString(R.string.left_team), mLeftTeamString);
+                intent.putExtra(getString(R.string.right_team), mRightTeamString);
+                intent.putExtra(getString(R.string.time_per_quarter), mTimeString);
+                intent.putExtra(getString(R.string.bonus_situation), mBonusString);
+                startActivity(intent);
+            }
+        });
     }
 
     private void manageUserInput() {

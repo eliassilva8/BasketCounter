@@ -84,6 +84,11 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
                 Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
                 startActivity(intent);
             }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                Toast.makeText(DisplayActivity.this, getString(R.string.action_cannot_be_executed), Toast.LENGTH_SHORT).show();
+            }
         });
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
