@@ -1,4 +1,4 @@
-package com.ems.android.basketcounter;
+package com.ems.android.basketcounter.paid;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,14 +10,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.ems.android.basketcounter.R;
 import com.ems.android.basketcounter.data.GameAdapter;
 import com.ems.android.basketcounter.data.GameDbContract;
 import com.ems.android.basketcounter.data.GameLoader;
 import com.ems.android.basketcounter.data.GamePOJO;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import java.util.List;
 
@@ -29,8 +26,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     FloatingActionButton mNewGameFab;
     @BindView(R.id.games_rv)
     RecyclerView mGamesRecyclerView;
-    @BindView(R.id.adView_main)
-    AdView mMainAdView;
     private static final int LOADER_ID = 100;
     private GameAdapter mGameAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -44,21 +39,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
-        MobileAds.initialize(this, getString(R.string.ADMOB_APP_ID));
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mMainAdView.loadAd(adRequest);
-        mMainAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                mMainAdView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                mMainAdView.setVisibility(View.GONE);
-            }
-        });
 
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mGamesRecyclerView.setLayoutManager(mLayoutManager);

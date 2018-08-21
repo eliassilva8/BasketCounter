@@ -8,8 +8,8 @@ android {
         applicationId "com.ems.android.basketcounter"
         minSdkVersion 17
         targetSdkVersion 27
-        versionCode 7
-        versionName "1.7"
+        versionCode 8
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -19,6 +19,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "mode"
+
+    productFlavors {
+        free {
+            applicationIdSuffix ".free"
+            versionNameSuffix "-free"
+            dimension "mode"
+        }
+        paid {
+            applicationIdSuffix ".paid"
+            versionNameSuffix "-paid"
+            dimension "mode"
+        }
+    }
+    sourceSets { main { java.srcDirs = ['src/main/java', 'src/test/java/'] } }
 }
 
 dependencies {
@@ -37,10 +52,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-ads:15.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-perf:16.0.0'
+    implementation 'com.google.firebase:firebase-perf:16.1.0'
 
     implementation "com.jakewharton:butterknife:$butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
-}
 
-apply plugin: 'com.google.gms.google-services'
+    apply plugin: 'com.google.gms.google-services'
+}

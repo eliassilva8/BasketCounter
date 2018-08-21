@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_team_a"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/extra_large_margin"
+        android:gravity="center_vertical"
+        android:text="@string/team_A"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/normal_text"
+        app:layout_constraintBottom_toBottomOf="@+id/et_left_team_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_left_team_name" />
+
+    <TextView
+        android:id="@+id/tv_team_b"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/extra_large_margin"
+        android:gravity="center_vertical"
+        android:text="@string/team_B"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/normal_text"
+        app:layout_constraintBottom_toBottomOf="@+id/et_right_team_name"
+        app:layout_constraintEnd_toEndOf="@+id/tv_team_a"
+        app:layout_constraintStart_toStartOf="@+id/tv_team_a"
+        app:layout_constraintTop_toBottomOf="@+id/tv_team_a" />
+
+    <EditText
+        android:id="@+id/et_left_team_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/extra_large_margin"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/extra_large_margin"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="@string/left_team"
+        android:inputType="textPersonName"
+        android:padding="@dimen/small_margin"
+        android:textColor="@color/text_black"
+        android:textColorHint="@color/text_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_team_a"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_right_team_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/extra_large_margin"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="@string/right_team"
+        android:inputType="textPersonName"
+        android:padding="@dimen/small_margin"
+        android:textColor="@color/text_black"
+        android:textColorHint="@color/text_grey"
+        app:layout_constraintEnd_toEndOf="@+id/et_left_team_name"
+        app:layout_constraintHorizontal_bias="0.321"
+        app:layout_constraintStart_toStartOf="@+id/et_left_team_name"
+        app:layout_constraintTop_toBottomOf="@+id/et_left_team_name" />
+
+    <TextView
+        android:id="@+id/tv_time_per_quarter_label"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/extra_large_margin"
+        android:gravity="center_vertical"
+        android:text="@string/time_per_quarter"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/normal_text"
+        app:layout_constraintBottom_toBottomOf="@+id/et_timer"
+        app:layout_constraintStart_toStartOf="@+id/tv_team_b"
+        app:layout_constraintTop_toBottomOf="@+id/et_right_team_name" />
+
+    <EditText
+        android:id="@+id/et_timer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/extra_large_margin"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:hint="10"
+        android:inputType="numberDecimal"
+        android:padding="@dimen/small_margin"
+        android:textColor="@color/text_black"
+        android:textColorHint="@color/text_grey"
+        app:layout_constraintEnd_toStartOf="@+id/tv_minutes_label"
+        app:layout_constraintStart_toEndOf="@+id/tv_time_per_quarter_label"
+        app:layout_constraintTop_toBottomOf="@+id/et_right_team_name" />
+
+    <TextView
+        android:id="@+id/tv_minutes_label"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/minutes_label"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/normal_text"
+        app:layout_constraintBottom_toBottomOf="@+id/et_timer"
+        app:layout_constraintEnd_toEndOf="@+id/et_right_team_name"
+        app:layout_constraintStart_toEndOf="@+id/et_timer"
+        app:layout_constraintTop_toTopOf="@+id/et_timer" />
+
+    <TextView
+        android:id="@+id/tv_bonus_situation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:text="@string/bonus_situation"
+        android:textSize="@dimen/normal_text"
+        android:textColor="@color/text_black"
+        app:layout_constraintBottom_toBottomOf="@+id/et_bonus_situation"
+        app:layout_constraintEnd_toEndOf="@+id/tv_time_per_quarter_label"
+        app:layout_constraintStart_toStartOf="@+id/tv_time_per_quarter_label"
+        app:layout_constraintTop_toTopOf="@+id/et_bonus_situation" />
+
+    <EditText
+        android:id="@+id/et_bonus_situation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/extra_large_margin"
+        android:ems="10"
+        android:inputType="number"
+        android:textColor="@color/text_black"
+        android:textColorHint="@color/text_grey"
+        android:hint="4"
+        android:padding="@dimen/small_margin"
+        android:background="@drawable/border"
+        app:layout_constraintEnd_toEndOf="@+id/et_timer"
+        app:layout_constraintStart_toStartOf="@+id/et_timer"
+        app:layout_constraintTop_toBottomOf="@+id/et_timer" />
+
+    <TextView
+        android:id="@+id/tv_fouls_label"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/fouls_label"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/normal_text"
+        app:layout_constraintBottom_toBottomOf="@+id/et_bonus_situation"
+        app:layout_constraintEnd_toEndOf="@+id/tv_minutes_label"
+        app:layout_constraintStart_toEndOf="@+id/et_bonus_situation"
+        app:layout_constraintTop_toTopOf="@+id/et_bonus_situation" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/confirm_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginStart="@dimen/small_margin"
+        android:contentDescription="Confirm"
+        android:elevation="@dimen/fab_elevation"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_done_24px" />
+
+</android.support.constraint.ConstraintLayout>

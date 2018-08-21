@@ -1,4 +1,4 @@
-package com.ems.android.basketcounter;
+package com.ems.android.basketcounter.paid;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.ems.android.basketcounter.R;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import butterknife.BindView;
@@ -27,8 +26,6 @@ public class ConfigActivity extends AppCompatActivity {
     EditText mTimePerQuarter;
     @BindView(R.id.et_bonus_situation)
     EditText mBonus;
-    @BindView(R.id.adView_config)
-    AdView mConfigAdView;
     @BindView(R.id.confirm_fab)
     FloatingActionButton mConfirmFab;
 
@@ -46,9 +43,6 @@ public class ConfigActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mConfigAdView.loadAd(adRequest);
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);

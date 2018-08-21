@@ -1,4 +1,4 @@
-package com.ems.android.basketcounter;
+package com.ems.android.basketcounter.free;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ems.android.basketcounter.R;
 import com.ems.android.basketcounter.data.GameDbContract;
 import com.ems.android.basketcounter.data.GamePOJO;
 import com.ems.android.basketcounter.utils.NetworkReceiver;

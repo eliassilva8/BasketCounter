@@ -160,15 +160,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/default_margin"
         android:layout_marginEnd="@dimen/small_margin"
         android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/extra_large_margin"
         android:contentDescription="Confirm"
         android:elevation="@dimen/fab_elevation"
         app:backgroundTint="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@+id/adView_config"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_bonus_situation"
         app:srcCompat="@drawable/ic_baseline_done_24px" />
 
     <com.google.android.gms.ads.AdView
@@ -177,11 +177,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/default_margin"
         ads:adSize="LARGE_BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_fab"></com.google.android.gms.ads.AdView>
 
 
 </android.support.constraint.ConstraintLayout>

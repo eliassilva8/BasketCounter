@@ -1,10 +1,8 @@
-package com.ems.android.basketcounter;
+package com.ems.android.basketcounter.paid;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +14,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ems.android.basketcounter.R;
 import com.ems.android.basketcounter.data.GameDbContract.GameEntry;
 import com.ems.android.basketcounter.data.GameDbHelper;
-import com.ems.android.basketcounter.utils.NetworkReceiver;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,7 +25,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DisplayActivity extends AppCompatActivity implements NetworkReceiver.NetworkReceiverListener {
+public class DisplayActivity extends AppCompatActivity {
     private int mScoreLeftTeam = 0;
     private int mScoreRightTeam = 0;
     private int mFoulsLeftTeam = 0;
@@ -38,12 +33,10 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
     private long mQuarterTime = 0;
     private int mBonusSituation = 0;
     private int mQuarter = 1;
-    private InterstitialAd mInterstitial;
     private CountDownTimer mCountDownTimer;
     private long mTimeRemaining;
     private boolean isTimerPaused;
     private GameDbHelper mDbHelper;
-    private NetworkReceiver mReceiver;
 
     @BindView(R.id.tv_left_team)
     TextView mTvLeftTeam;
@@ -74,27 +67,6 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
-        mInterstitial = new InterstitialAd(this);
-        mInterstitial.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
-
-        mInterstitial.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                Toast.makeText(DisplayActivity.this, getString(R.string.action_cannot_be_executed), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        mReceiver = new NetworkReceiver();
-        this.registerReceiver(mReceiver, filter);
-        mReceiver.setNetworkReceiverListener(this);
 
         mDbHelper = new GameDbHelper(this);
 
@@ -191,22 +163,22 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
      * @param view
      */
     public void addPointsLeft(View view) {
-       switch (view.getId()) {
-           case R.id.bt_three_points_left:
-               mScoreLeftTeam += 3;
-               break;
-           case R.id.bt_two_points_left:
-               mScoreLeftTeam += 2;
-               break;
-           case R.id.bt_free_throw_left:
-               mScoreLeftTeam++;
-               break;
-           case R.id.bt_minus_one_point_left:
-               if (mScoreLeftTeam > 0) {
-                   mScoreLeftTeam--;
-               }
-               break;
-       }
+        switch (view.getId()) {
+            case R.id.bt_three_points_left:
+                mScoreLeftTeam += 3;
+                break;
+            case R.id.bt_two_points_left:
+                mScoreLeftTeam += 2;
+                break;
+            case R.id.bt_free_throw_left:
+                mScoreLeftTeam++;
+                break;
+            case R.id.bt_minus_one_point_left:
+                if (mScoreLeftTeam > 0) {
+                    mScoreLeftTeam--;
+                }
+                break;
+        }
         mTvLeftScore.setText(String.valueOf(mScoreLeftTeam));
     }
 
@@ -324,14 +296,8 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                if (mReceiver.isConnected(this)) {
-                    if (mInterstitial.isLoaded()) {
-                        saveGame();
-                    }
-                    return true;
-                } else {
-                    Toast.makeText(DisplayActivity.this, getString(R.string.connect_to_internet), Toast.LENGTH_LONG).show();
-                }
+                saveGame();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -358,8 +324,8 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
 
         if (newRowId > -1) {
             Toast.makeText(DisplayActivity.this, getString(R.string.game_saved), Toast.LENGTH_SHORT).show();
-            mInterstitial.show();
-
+            Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
+            startActivity(intent);
         } else {
             Toast.makeText(DisplayActivity.this, getString(R.string.error_saving_game), Toast.LENGTH_SHORT).show();
         }
@@ -369,13 +335,5 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
     protected void onDestroy() {
         mDbHelper.close();
         super.onDestroy();
-    }
-
-    @Override
-    public void onConnectionChange(boolean isConnected) {
-        if (mReceiver.isConnected(this)) {
-            AdRequest adRequest = new AdRequest.Builder().build();
-            mInterstitial.loadAd(adRequest);
-        }
     }
 }

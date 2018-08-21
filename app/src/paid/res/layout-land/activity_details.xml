@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailsActivity">
+    tools:context=".paid.DetailsActivity">
 
     <TextView
         android:id="@+id/date_details_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:textSize="@dimen/team_name"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_right_team_details"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -25,9 +25,9 @@
         android:id="@+id/tv_left_team_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/small_margin"
-        android:layout_marginEnd="@dimen/small_margin"
-        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
         android:background="@color/colorPrimaryLight"
         android:gravity="center_horizontal"
         android:ellipsize="end"
@@ -45,9 +45,9 @@
         android:id="@+id/tv_right_team_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/small_margin"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="@dimen/default_margin"
-        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginStart="8dp"
         android:background="@color/colorPrimaryLight"
         android:gravity="center_horizontal"
         android:ellipsize="end"
@@ -72,7 +72,8 @@
         android:textSize="@dimen/score_display"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="@+id/tv_left_team_details"
-        app:layout_constraintStart_toStartOf="@+id/tv_left_team_details" />
+        app:layout_constraintStart_toStartOf="@+id/tv_left_team_details"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <TextView
         android:id="@+id/tv_score_right_details"
@@ -85,18 +86,22 @@
         android:textSize="@dimen/score_display"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="@+id/tv_right_team_details"
-        app:layout_constraintStart_toStartOf="@+id/tv_right_team_details" />
+        app:layout_constraintStart_toStartOf="@+id/tv_right_team_details"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <TextView
         android:id="@+id/winner_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
         android:textSize="32sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:text="Home won!" />
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_score_right_details"
+        tools:text="Home wins!" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
@@ -112,22 +117,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView_details"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/default_margin"
-        ads:adSize="LARGE_BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/winner_text">
-
-    </com.google.android.gms.ads.AdView>
 
 </android.support.constraint.ConstraintLayout>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.ems.android.basketcounter.DisplayActivity"
+    tools:context="com.ems.android.basketcounter.paid.DisplayActivity"
     tools:layout_editor_absoluteY="25dp">
 
 
@@ -24,7 +24,7 @@
         android:id="@+id/tv_left_team"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginTop="@dimen/small_margin"
         android:background="@color/colorPrimaryLight"
@@ -35,7 +35,7 @@
         android:paddingTop="@dimen/small_margin"
         android:text="@string/left_team"
         android:textColor="@color/text_black"
-        android:textSize="@dimen/team_name"
+        android:textSize="@dimen/team_name_landscape"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_margin"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="@dimen/default_margin"
         android:background="@color/colorPrimaryLight"
         android:gravity="center_horizontal"
         android:ellipsize="end"
@@ -54,7 +54,7 @@
         android:paddingTop="@dimen/small_margin"
         android:text="@string/right_team"
         android:textColor="@color/text_black"
-        android:textSize="@dimen/team_name"
+        android:textSize="@dimen/team_name_landscape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/tv_left_team" />
@@ -76,9 +76,8 @@
             android:gravity="center_horizontal"
             android:text="0"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/score_display"
+            android:textSize="@dimen/score_display_landscape"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,7 +111,7 @@
             android:gravity="center_horizontal"
             android:text="0"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/score_display"
+            android:textSize="@dimen/score_display_landscape"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
@@ -137,60 +136,63 @@
         android:id="@+id/bt_three_points_left"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/small_margin"
         android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_points_selector"
         android:onClick="addPointsLeft"
         android:text="@string/three_points"
         android:textSize="@dimen/button_text"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/gl_left_quarter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <Button
         android:id="@+id/bt_two_points_left"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginStart="@dimen/small_margin"
         android:background="@drawable/button_points_selector"
         android:onClick="addPointsLeft"
         android:text="@string/two_points"
         android:textSize="@dimen/button_text"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/bt_three_points_left"
-        app:layout_constraintStart_toStartOf="@+id/bt_three_points_left"
-        app:layout_constraintTop_toBottomOf="@+id/bt_three_points_left" />
+        app:layout_constraintBottom_toBottomOf="@+id/bt_three_points_left"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/gl_left_quarter"
+        app:layout_constraintTop_toTopOf="@+id/bt_three_points_left" />
 
     <Button
         android:id="@+id/bt_three_points_right"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/small_margin"
         android:layout_marginStart="@dimen/default_margin"
         android:background="@drawable/button_points_selector"
         android:onClick="addPointsRight"
         android:text="@string/three_points"
         android:textSize="@dimen/button_text"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right_quarter"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/bt_three_points_left" />
+        app:layout_constraintTop_toTopOf="@+id/bt_two_points_left" />
 
     <Button
         android:id="@+id/bt_two_points_right"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginStart="@dimen/small_margin"
         android:background="@drawable/button_points_selector"
         android:onClick="addPointsRight"
         android:text="@string/two_points"
         android:textSize="@dimen/button_text"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/bt_three_points_right"
-        app:layout_constraintStart_toStartOf="@+id/bt_three_points_right"
-        app:layout_constraintTop_toTopOf="@+id/bt_two_points_left" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/gl_right_quarter"
+        app:layout_constraintTop_toTopOf="@+id/bt_three_points_right" />
 
     <Button
         android:id="@+id/bt_free_throw_left"
@@ -205,7 +207,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/bt_minus_one_point_left"
         app:layout_constraintHorizontal_weight="0.60"
-        app:layout_constraintStart_toStartOf="@+id/bt_two_points_left"
+        app:layout_constraintStart_toStartOf="@+id/bt_three_points_left"
         app:layout_constraintTop_toBottomOf="@+id/bt_two_points_left" />
 
     <Button
@@ -217,7 +219,7 @@
         android:onClick="addPointsLeft"
         android:text="-"
         android:textSize="@dimen/button_text"
-        app:layout_constraintEnd_toEndOf="@+id/bt_two_points_left"
+        app:layout_constraintEnd_toEndOf="@+id/bt_three_points_left"
         app:layout_constraintHorizontal_weight="0.40"
         app:layout_constraintStart_toEndOf="@+id/bt_free_throw_left"
         app:layout_constraintTop_toTopOf="@+id/bt_free_throw_left" />
@@ -234,8 +236,8 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/bt_minus_one_point_right"
         app:layout_constraintHorizontal_weight="0.60"
-        app:layout_constraintStart_toStartOf="@+id/bt_two_points_right"
-        app:layout_constraintTop_toTopOf="@+id/bt_minus_one_point_left" />
+        app:layout_constraintStart_toStartOf="@+id/bt_three_points_right"
+        app:layout_constraintTop_toTopOf="@+id/bt_minus_one_foul_left" />
 
     <Button
         android:id="@+id/bt_minus_one_point_right"
@@ -246,7 +248,7 @@
         android:onClick="addPointsRight"
         android:text="-"
         android:textSize="@dimen/button_text"
-        app:layout_constraintEnd_toEndOf="@+id/bt_two_points_right"
+        app:layout_constraintEnd_toEndOf="@+id/bt_three_points_right"
         app:layout_constraintHorizontal_weight="0.40"
         app:layout_constraintStart_toEndOf="@+id/bt_free_throw_right"
         app:layout_constraintTop_toTopOf="@+id/bt_free_throw_right" />
@@ -255,55 +257,62 @@
         android:id="@+id/bt_foul_left"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/extra_small_margin"
+        android:layout_marginStart="@dimen/small_margin"
         android:background="@drawable/button_points_selector"
         android:onClick="foulsLeftClicked"
         android:text="@string/foul"
         android:textSize="@dimen/button_text"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/bt_free_throw_left"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_minus_one_point_left"
+        app:layout_constraintEnd_toStartOf="@+id/bt_minus_one_foul_left"
         app:layout_constraintHorizontal_weight="0.60"
-        app:layout_constraintStart_toStartOf="@+id/bt_free_throw_left"
-        app:layout_constraintTop_toBottomOf="@+id/bt_free_throw_left" />
+        app:layout_constraintStart_toStartOf="@+id/gl_left_quarter"
+        app:layout_constraintTop_toTopOf="@+id/bt_minus_one_point_left" />
 
     <Button
         android:id="@+id/bt_minus_one_foul_left"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginStart="@dimen/extra_small_margin"
         android:background="@drawable/button_minus_selector"
         android:onClick="foulsLeftClicked"
         android:text="-"
         android:textSize="@dimen/button_text"
-        app:layout_constraintEnd_toEndOf="@+id/bt_minus_one_point_left"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_foul_left"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_weight="0.40"
-        app:layout_constraintStart_toStartOf="@+id/bt_minus_one_point_left"
+        app:layout_constraintStart_toEndOf="@+id/bt_foul_left"
         app:layout_constraintTop_toTopOf="@+id/bt_foul_left" />
 
     <Button
         android:id="@+id/bt_foul_right"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/extra_small_margin"
         android:background="@drawable/button_points_selector"
         android:onClick="foulsRightClicked"
         android:text="@string/foul"
         android:textSize="@dimen/button_text"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/bt_free_throw_right"
+        app:layout_constraintEnd_toStartOf="@+id/bt_minus_one_foul_right"
         app:layout_constraintHorizontal_weight="0.60"
-        app:layout_constraintStart_toStartOf="@+id/bt_free_throw_right"
+        app:layout_constraintStart_toStartOf="@+id/bt_two_points_right"
         app:layout_constraintTop_toTopOf="@+id/bt_minus_one_foul_left" />
 
     <Button
         android:id="@+id/bt_minus_one_foul_right"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/extra_small_margin"
         android:background="@drawable/button_minus_selector"
         android:onClick="foulsRightClicked"
         android:text="-"
         android:textSize="@dimen/button_text"
-        app:layout_constraintEnd_toEndOf="@+id/bt_minus_one_point_right"
+        app:layout_constraintEnd_toEndOf="@+id/bt_two_points_right"
         app:layout_constraintHorizontal_weight="0.40"
-        app:layout_constraintStart_toStartOf="@+id/bt_minus_one_point_right"
+        app:layout_constraintStart_toEndOf="@+id/bt_foul_right"
         app:layout_constraintTop_toTopOf="@+id/bt_foul_right" />
 
     <!-- Timer textview and buttons -->
@@ -311,56 +320,74 @@
         android:id="@+id/tv_quarter_time_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/default_margin"
         android:textColor="@color/text_black"
-        android:textSize="@dimen/time_display"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        android:textSize="@dimen/time_display_landscape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_minus_one_foul_left"
         tools:text="10:00" />
 
     <ImageButton
+        android:id="@+id/bt_pause_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:background="@drawable/button_minus_selector"
+        android:contentDescription="Button to pause timer"
+        android:minHeight="@dimen/button_min_height"
+        android:minWidth="48dp"
+        android:onClick="pauseTimer"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_restart_timer"
+        app:layout_constraintEnd_toStartOf="@+id/tv_quarter_time_display"
+        app:layout_constraintTop_toTopOf="@+id/tv_quarter_time_display"
+        app:srcCompat="@drawable/ic_pause_white_24px" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_left_quarter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_right_quarter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <ImageButton
         android:id="@+id/bt_play_timer"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@drawable/button_minus_selector"
         android:contentDescription="Button to start timer"
         android:minHeight="@dimen/button_min_height"
         android:onClick="playTimer"
-        android:layout_marginEnd="@dimen/default_margin"
-        app:layout_constraintEnd_toStartOf="@+id/bt_restart_timer"
-        app:layout_constraintStart_toStartOf="@+id/tv_quarter_time_display"
-        app:layout_constraintTop_toBottomOf="@+id/tv_quarter_time_display"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_pause_timer"
+        app:layout_constraintEnd_toEndOf="@+id/bt_pause_timer"
+        app:layout_constraintStart_toStartOf="@+id/bt_pause_timer"
+        app:layout_constraintTop_toTopOf="@+id/bt_pause_timer"
         app:srcCompat="@drawable/ic_play_arrow_white_24px" />
 
     <ImageButton
-        android:id="@+id/bt_pause_timer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_minus_selector"
-        android:contentDescription="Button to pause timer"
-        android:minHeight="@dimen/button_min_height"
-        android:onClick="pauseTimer"
-        app:layout_constraintEnd_toStartOf="@+id/bt_restart_timer"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/tv_quarter_time_display"
-        app:layout_constraintTop_toBottomOf="@+id/tv_quarter_time_display"
-        app:srcCompat="@drawable/ic_pause_white_24px" />
-
-    <ImageButton
         android:id="@+id/bt_restart_timer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/small_margin"
         android:background="@drawable/button_minus_selector"
         android:contentDescription="Button to reset timer"
         android:minHeight="@dimen/button_min_height"
+        android:minWidth="48dp"
         android:onClick="restartTimer"
-        app:layout_constraintBottom_toBottomOf="@+id/bt_pause_timer"
-        app:layout_constraintEnd_toEndOf="@+id/tv_quarter_time_display"
-        app:layout_constraintStart_toEndOf="@+id/bt_pause_timer"
-        app:layout_constraintTop_toTopOf="@+id/bt_pause_timer"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_quarter_time_display"
+        app:layout_constraintStart_toEndOf="@+id/tv_quarter_time_display"
+        app:layout_constraintTop_toTopOf="@+id/tv_quarter_time_display"
         app:srcCompat="@drawable/ic_autorenew_white_24px" />
 
     <Button
