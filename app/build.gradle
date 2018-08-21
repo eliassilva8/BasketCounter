@@ -2,6 +2,23 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
+    lintOptions {
+        checkReleaseBuilds false
+    }
+    signingConfigs {
+        free {
+            keyAlias 'free'
+            keyPassword 'ana3elias8'
+            storeFile file('E:/Projects/Android/Keystores/android.jks')
+            storePassword 'ana3elias8'
+        }
+        paid {
+            keyAlias 'paid'
+            keyPassword 'ana3elias8'
+            storeFile file('E:/Projects/Android/Keystores/android.jks')
+            storePassword 'ana3elias8'
+        }
+    }
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
@@ -20,42 +37,44 @@ android {
         }
     }
     flavorDimensions "mode"
-
     productFlavors {
         free {
-            applicationIdSuffix ".free"
             versionNameSuffix "-free"
             dimension "mode"
+            minSdkVersion 19
+            targetSdkVersion 27
+            versionCode 8
+            versionName '2.0'
+            applicationId 'com.ems.android.basketcounter'
         }
         paid {
             applicationIdSuffix ".paid"
             versionNameSuffix "-paid"
             dimension "mode"
+            minSdkVersion 19
+            targetSdkVersion 27
+            versionCode 1
+            versionName '1.0'
         }
     }
     sourceSets { main { java.srcDirs = ['src/main/java', 'src/test/java/'] } }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     testImplementation 'junit:junit:4.12'
-
     implementation "com.android.support:appcompat-v7:$androidSupportVersion"
     implementation "com.android.support:customtabs:$androidSupportVersion"
     implementation "com.android.support:design:$androidSupportVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-
     implementation 'com.google.firebase:firebase-ads:15.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-perf:16.1.0'
-
     implementation "com.jakewharton:butterknife:$butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
-
     apply plugin: 'com.google.gms.google-services'
 }

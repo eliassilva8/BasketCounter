@@ -21,9 +21,9 @@
     <string name="save_game" translatable="false">Save game</string>
     <string name="game_saved">Match saved!</string>
     <string name="error_saving_game">Error trying to save the game!</string>
-    <string name="game_icon_description">Game icon</string>
-    <string name="vs">VS</string>
-    <string name="game_clicked">game_clicked</string>
+    <string name="game_icon_description" translatable="false">Game icon</string>
+    <string name="vs" translatable="false">VS</string>
+    <string name="game_clicked" translatable="false">game_clicked</string>
     <string name="won">won!</string>
     <string name="draw">Was a draw!</string>
     <string name="first_quarter">1Q</string>
