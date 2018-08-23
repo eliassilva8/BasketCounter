@@ -5,4 +5,8 @@
         android:icon="@drawable/ic_baseline_delete_24px"
         android:title="@string/delete_game"
         app:showAsAction="ifRoom"/>
+    <item android:id="@+id/share"
+        android:icon="@drawable/ic_baseline_share_24px"
+        android:title="@string/share_match"
+        app:showAsAction="ifRoom"/>
 </menu>

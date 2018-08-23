@@ -20,6 +20,10 @@ import com.ems.android.basketcounter.R;
 import com.ems.android.basketcounter.data.GameDbContract.GameEntry;
 import com.ems.android.basketcounter.data.GameDbHelper;
 import com.ems.android.basketcounter.utils.NetworkReceiver;
+import com.facebook.share.model.ShareOpenGraphAction;
+import com.facebook.share.model.ShareOpenGraphContent;
+import com.facebook.share.model.ShareOpenGraphObject;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -45,6 +49,9 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
     private boolean isTimerPaused;
     private GameDbHelper mDbHelper;
     private NetworkReceiver mReceiver;
+    private String mHomeName;
+    private String mGuestName;
+    private int mItemMenuSelected;
 
     @BindView(R.id.tv_left_team)
     TextView mTvLeftTeam;
@@ -82,8 +89,15 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         mInterstitial.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
-                startActivity(intent);
+                switch (mItemMenuSelected) {
+                    case R.id.save:
+                        Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.share:
+                        shareOnFacebook();
+                        break;
+                }
             }
 
             @Override
@@ -100,8 +114,10 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         mDbHelper = new GameDbHelper(this);
 
         Intent intent = getIntent();
-        mTvLeftTeam.setText(intent.getExtras().getString(getString(R.string.left_team), getString(R.string.left_team)));
-        mTvRightTeam.setText(intent.getExtras().getString(getString(R.string.right_team), getString(R.string.right_team)));
+        mHomeName = intent.getExtras().getString(getString(R.string.left_team), getString(R.string.left_team));
+        mGuestName = intent.getExtras().getString(getString(R.string.right_team), getString(R.string.right_team));
+        mTvLeftTeam.setText(mHomeName);
+        mTvRightTeam.setText(mGuestName);
         mBonusSituation = Integer.parseInt(intent.getExtras().getString(getString(R.string.bonus_situation), "4"));
         String timeString = intent.getExtras().getString(getString(R.string.time_per_quarter), "10");
         mQuarterTime = minutesToMilliseconds(timeString);
@@ -327,7 +343,18 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
             case R.id.save:
                 if (mReceiver.isConnected(this)) {
                     if (mInterstitial.isLoaded()) {
+                        mItemMenuSelected = R.id.save;
                         saveGame();
+                    }
+                    return true;
+                } else {
+                    Toast.makeText(DisplayActivity.this, getString(R.string.connect_to_internet), Toast.LENGTH_LONG).show();
+                }
+            case R.id.share:
+                if (mReceiver.isConnected(this)) {
+                    if (mInterstitial.isLoaded()) {
+                        mItemMenuSelected = R.id.share;
+                        mInterstitial.show();
                     }
                     return true;
                 } else {
@@ -360,7 +387,6 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         if (newRowId > -1) {
             Toast.makeText(DisplayActivity.this, getString(R.string.game_saved), Toast.LENGTH_SHORT).show();
             mInterstitial.show();
-
         } else {
             Toast.makeText(DisplayActivity.this, getString(R.string.error_saving_game), Toast.LENGTH_SHORT).show();
         }
@@ -378,5 +404,28 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
             AdRequest adRequest = new AdRequest.Builder().build();
             mInterstitial.loadAd(adRequest);
         }
+    }
+
+    /**
+     * Publish match result in facebook
+     */
+    private void shareOnFacebook() {
+        ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
+                .putString("og:url", "https://play.google.com/store/apps/details?id=com.ems.android.basketcounter&hl=en_US")
+                .putString("fb:app_id", getString(R.string.facebook_app_id))
+                .putString("og:title", getString(R.string.result) + " - " + String.valueOf(mQuarter) + getString(R.string.quarter))
+                .putString("og:description", mHomeName + " - " + String.valueOf(mScoreLeftTeam) + " | " + mGuestName + " - " + String.valueOf(mScoreRightTeam))
+                .putString("og:type", "website")
+                .putString("og:image", "https://lh3.googleusercontent.com/ILk5NjkuOW2PaQAPG04DGt5r6t-KsC-V_aHzGqZ6_mjWGwYt3fBX5AlAnSliS16D4hA=s180-rw")
+                .build();
+        ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
+                .setActionType("fitness.runs")
+                .putObject("match", object)
+                .build();
+        ShareOpenGraphContent content = new ShareOpenGraphContent.Builder()
+                .setPreviewPropertyName("match")
+                .setAction(action)
+                .build();
+        ShareDialog.show(this, content);
     }
 }

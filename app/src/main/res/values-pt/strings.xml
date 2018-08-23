@@ -24,4 +24,6 @@
     <string name="action_cannot_be_executed">A acção não pode ser executada neste momento. Por favor, tente mais tarde.</string>
     <string name="connect_to_internet">Por favor, ligue-se à internet para continuar.</string>
     <string name="error_saving_game">Erro ao tentar salvar a partida!</string>
+    <string name="result">Resultado</string>
+    <string name="final_result">Resultado final</string>
 </resources>

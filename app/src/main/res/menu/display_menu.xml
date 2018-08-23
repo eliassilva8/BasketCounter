@@ -3,6 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/save"
         android:icon="@drawable/ic_baseline_save_24px"
-        android:title="@string/save_game"
+        android:title="@string/save_match"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/share"
+        android:icon="@drawable/ic_baseline_share_24px"
+        android:title="@string/share_match"
         app:showAsAction="ifRoom"/>
 </menu>

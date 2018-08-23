@@ -136,15 +136,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/small_margin"
         android:layout_marginEnd="@dimen/small_margin"
         android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/extra_large_margin"
         android:contentDescription="Confirm"
         android:elevation="@dimen/fab_elevation"
         app:backgroundTint="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bonus_situation"
         app:srcCompat="@drawable/ic_baseline_done_24px" />
 
     <android.support.constraint.Guideline

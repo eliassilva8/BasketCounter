@@ -28,7 +28,7 @@ allprojects {
         }
     }
     ext {
-        androidSupportVersion = "27.1.1"
+        androidSupportVersion = "27.0.2"
         butterKnifeVersion = "8.8.1"
     }
 }
