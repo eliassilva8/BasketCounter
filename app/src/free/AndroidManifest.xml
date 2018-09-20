@@ -11,7 +11,6 @@
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -25,6 +24,16 @@
             android:name=".free.DetailsActivity"
             android:parentActivityName=".free.MainActivity">
         </activity>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" >
+        </meta-data>
+        <provider android:authorities="com.facebook.app.FacebookContentProvider{APP_ID}"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
     </application>
-
 </manifest>

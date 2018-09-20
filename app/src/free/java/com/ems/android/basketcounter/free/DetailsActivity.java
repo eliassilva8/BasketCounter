@@ -17,15 +17,17 @@ import com.ems.android.basketcounter.R;
 import com.ems.android.basketcounter.data.GameDbContract;
 import com.ems.android.basketcounter.data.GamePOJO;
 import com.ems.android.basketcounter.utils.NetworkReceiver;
-import com.facebook.share.model.ShareOpenGraphAction;
-import com.facebook.share.model.ShareOpenGraphContent;
-import com.facebook.share.model.ShareOpenGraphObject;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
+import bolts.AppLinks;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -53,6 +55,8 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
     private String mHomeScoreString;
     private String mGuestScoreString;
     private int mItemMenuSelected;
+    CallbackManager callbackManager;
+    ShareDialog shareDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,16 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
             }
         });
 
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+
+        FacebookSdk.sdkInitialize(this);
+        Uri targetUrl = AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
+        if (targetUrl != null) {
+            Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         mReceiver = new NetworkReceiver();
         this.registerReceiver(mReceiver, filter);
@@ -103,7 +117,7 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
         mHomeName.setText(mHomeNameString);
         mGuestName.setText(mGuestNameString);
         mHomeScore.setText(mHomeScoreString);
-        mGuestScore.setText(mHomeScoreString);
+        mGuestScore.setText(mGuestScoreString);
 
         int homeScore = Integer.parseInt(mGame.getHomeTeamPoints());
         int guestScore = Integer.parseInt(mGame.getGuestTeamPoints());
@@ -173,22 +187,21 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
      * Publish match result in facebook
      */
     private void shareOnFacebook() {
-        ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
-                .putString("og:url", "https://play.google.com/store/apps/details?id=com.ems.android.basketcounter&hl=en_US")
-                .putString("fb:app_id", getString(R.string.facebook_app_id))
-                .putString("og:title", getString(R.string.final_result))
-                .putString("og:description", mHomeNameString + " - " + mHomeScoreString + " | " + mGuestNameString + " - " + mGuestScoreString)
-                .putString("og:type", "website")
-                .putString("og:image", "https://lh3.googleusercontent.com/ILk5NjkuOW2PaQAPG04DGt5r6t-KsC-V_aHzGqZ6_mjWGwYt3fBX5AlAnSliS16D4hA=s180-rw")
-                .build();
-        ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
-                .setActionType("fitness.runs")
-                .putObject("match", object)
-                .build();
-        ShareOpenGraphContent content = new ShareOpenGraphContent.Builder()
-                .setPreviewPropertyName("match")
-                .setAction(action)
-                .build();
-        ShareDialog.show(this, content);
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                    .setQuote(getString(R.string.final_result) + "\n" + mHomeNameString + " - " + mHomeScoreString + " | " + mGuestNameString + " - " + mGuestScoreString)
+                    .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.ems.android.basketcounter"))
+                    .setShareHashtag(new ShareHashtag.Builder()
+                        .setHashtag("#BasketCounter")
+                        .build())
+                    .build();
+            shareDialog.show(linkContent);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
