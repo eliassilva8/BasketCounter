@@ -22,7 +22,6 @@ import com.ems.android.basketcounter.data.GameDbContract.GameEntry;
 import com.ems.android.basketcounter.data.GameDbHelper;
 import com.ems.android.basketcounter.utils.NetworkReceiver;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
@@ -113,17 +112,11 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
 
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
-        FacebookSdk.sdkInitialize(this);
         Uri targetUrl = AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
         if (targetUrl != null) {
             Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
             startActivity(intent);
         }
-
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        mReceiver = new NetworkReceiver();
-        this.registerReceiver(mReceiver, filter);
-        mReceiver.setNetworkReceiverListener(this);
 
         mDbHelper = new GameDbHelper(this);
 
@@ -137,6 +130,24 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         mQuarterTime = minutesToMilliseconds(timeString);
         mTvTimer.setText(formatTime(mQuarterTime));
         btPauseTimer.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        mReceiver = new NetworkReceiver();
+        this.registerReceiver(mReceiver, filter);
+        mReceiver.setNetworkReceiverListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mReceiver != null) {
+            unregisterReceiver(mReceiver);
+            mReceiver = null;
+        }
     }
 
     /**
@@ -410,6 +421,10 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
     protected void onDestroy() {
         mDbHelper.close();
         super.onDestroy();
+        if (mReceiver != null) {
+            unregisterReceiver(mReceiver);
+            mReceiver = null;
+        }
     }
 
     @Override
@@ -426,7 +441,7 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
     private void shareOnFacebook() {
         if (ShareDialog.canShow(ShareLinkContent.class)) {
             ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                    .setQuote(getString(R.string.final_result) + String.valueOf(mQuarter) + getString(R.string.quarter) + "\n" + mHomeName + " - " + String.valueOf(mScoreLeftTeam) + " | " + mGuestName + " - " + String.valueOf(mScoreRightTeam))
+                    .setQuote(getString(R.string.result) + " " + String.valueOf(mQuarter) + getString(R.string.quarter) + "\n" + mHomeName + " - " + String.valueOf(mScoreLeftTeam) + " | " + mGuestName + " - " + String.valueOf(mScoreRightTeam))
                     .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.ems.android.basketcounter"))
                     .setShareHashtag(new ShareHashtag.Builder()
                             .setHashtag("#BasketCounter")

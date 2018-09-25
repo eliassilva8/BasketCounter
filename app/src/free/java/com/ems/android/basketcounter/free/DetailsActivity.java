@@ -18,7 +18,6 @@ import com.ems.android.basketcounter.data.GameDbContract;
 import com.ems.android.basketcounter.data.GamePOJO;
 import com.ems.android.basketcounter.utils.NetworkReceiver;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
@@ -94,17 +93,11 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
 
-        FacebookSdk.sdkInitialize(this);
         Uri targetUrl = AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
         if (targetUrl != null) {
             Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
             startActivity(intent);
         }
-
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        mReceiver = new NetworkReceiver();
-        this.registerReceiver(mReceiver, filter);
-        mReceiver.setNetworkReceiverListener(this);
 
         Intent intent = getIntent();
         mGame = intent.getParcelableExtra(getString(R.string.game_clicked));
@@ -127,6 +120,33 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
             mWinnerString.setText(mGame.getGuestTeamName() + " " + getString(R.string.won));
         } else {
             mWinnerString.setText(getString(R.string.draw));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        mReceiver = new NetworkReceiver();
+        this.registerReceiver(mReceiver, filter);
+        mReceiver.setNetworkReceiverListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mReceiver != null) {
+            unregisterReceiver(mReceiver);
+            mReceiver = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mReceiver != null) {
+            unregisterReceiver(mReceiver);
+            mReceiver = null;
         }
     }
 
