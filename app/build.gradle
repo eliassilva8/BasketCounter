@@ -43,8 +43,8 @@ android {
             dimension "mode"
             minSdkVersion 19
             targetSdkVersion 27
-            versionCode 8
-            versionName '2.0'
+            versionCode 9
+            versionName '2.1'
             applicationId 'com.ems.android.basketcounter'
         }
         paid {
