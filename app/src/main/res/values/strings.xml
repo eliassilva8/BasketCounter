@@ -29,7 +29,7 @@
     <string name="error_saving_game">Error trying to save the match!</string>
     <string name="game_icon_description" translatable="false">Game icon</string>
     <string name="vs" translatable="false">VS</string>
-    <string name="game_clicked" translatable="false">game_clicked</string>
+    <string name="match_clicked" translatable="false">match_clicked</string>
     <string name="won">won!</string>
     <string name="draw">Was a draw!</string>
     <string name="first_quarter">1Q</string>
@@ -44,4 +44,7 @@
     <string name="share_match" translatable="false">share_match</string>
     <string name="result">Result</string>
     <string name="final_result">Final result</string>
+    <string name="match_to_save" translatable="false">match_to_save</string>
+    <string name="match_to_delete" translatable="false">match_to_delete</string>
+    <string name="database_error">Database error!</string>
 </resources>

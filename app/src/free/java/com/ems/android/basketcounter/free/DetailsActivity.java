@@ -1,6 +1,5 @@
 package com.ems.android.basketcounter.free;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -14,8 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ems.android.basketcounter.R;
-import com.ems.android.basketcounter.data.GameDbContract;
-import com.ems.android.basketcounter.data.GamePOJO;
+import com.ems.android.basketcounter.room.Match;
 import com.ems.android.basketcounter.utils.NetworkReceiver;
 import com.facebook.CallbackManager;
 import com.facebook.share.model.ShareHashtag;
@@ -46,7 +44,7 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
     @BindView(R.id.adView_details)
     AdView mDetailsAdView;
 
-    GamePOJO mGame;
+    Match mMatch;
     private InterstitialAd mInterstitial;
     private NetworkReceiver mReceiver;
     private String mHomeNameString;
@@ -75,8 +73,10 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
                 switch (mItemMenuSelected) {
                     case R.id.delete:
                         Toast.makeText(DetailsActivity.this, getString(R.string.game_deleted), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        Intent intent = new Intent();
+                        intent.putExtra(getString(R.string.match_to_delete), mMatch);
+                        setResult(RESULT_OK, intent);
+                        finish();
                         break;
                     case R.id.share:
                         shareOnFacebook();
@@ -100,24 +100,24 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
         }
 
         Intent intent = getIntent();
-        mGame = intent.getParcelableExtra(getString(R.string.game_clicked));
-        mHomeNameString = mGame.getHomeTeamName();
-        mGuestNameString = mGame.getGuestTeamName();
-        mHomeScoreString = mGame.getHomeTeamPoints();
-        mGuestScoreString = mGame.getGuestTeamPoints();
+        mMatch = intent.getParcelableExtra(getString(R.string.match_clicked));
+        mHomeNameString = mMatch.getHomeTeamName();
+        mGuestNameString = mMatch.getGuestTeamName();
+        mHomeScoreString = mMatch.getHomeTeamPoints();
+        mGuestScoreString = mMatch.getGuestTeamPoints();
 
-        mDate.setText(mGame.getDate());
+        mDate.setText(mMatch.getDate());
         mHomeName.setText(mHomeNameString);
         mGuestName.setText(mGuestNameString);
         mHomeScore.setText(mHomeScoreString);
         mGuestScore.setText(mGuestScoreString);
 
-        int homeScore = Integer.parseInt(mGame.getHomeTeamPoints());
-        int guestScore = Integer.parseInt(mGame.getGuestTeamPoints());
+        int homeScore = Integer.parseInt(mMatch.getHomeTeamPoints());
+        int guestScore = Integer.parseInt(mMatch.getGuestTeamPoints());
         if (homeScore > guestScore) {
-            mWinnerString.setText(mGame.getHomeTeamName() + " " + getString(R.string.won));
+            mWinnerString.setText(mMatch.getHomeTeamName() + " " + getString(R.string.won));
         } else if (homeScore < guestScore) {
-            mWinnerString.setText(mGame.getGuestTeamName() + " " + getString(R.string.won));
+            mWinnerString.setText(mMatch.getGuestTeamName() + " " + getString(R.string.won));
         } else {
             mWinnerString.setText(getString(R.string.draw));
         }
@@ -164,7 +164,7 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
                 if (mReceiver.isConnected(this)) {
                     if (mInterstitial.isLoaded()) {
                         mItemMenuSelected = R.id.delete;
-                        deleteMatch();
+                        mInterstitial.show();
                     }
                     return true;
                 } else {
@@ -183,13 +183,6 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void deleteMatch() {
-        ContentResolver contentResolver = getContentResolver();
-        Uri uri = GameDbContract.GameEntry.buildGameUri(mGame.getId());
-        contentResolver.delete(uri, null, null);
-        mInterstitial.show();
     }
 
     @Override

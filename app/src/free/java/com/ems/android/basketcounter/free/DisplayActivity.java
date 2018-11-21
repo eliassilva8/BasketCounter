@@ -1,9 +1,7 @@
 package com.ems.android.basketcounter.free;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,8 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ems.android.basketcounter.R;
-import com.ems.android.basketcounter.data.GameDbContract.GameEntry;
-import com.ems.android.basketcounter.data.GameDbHelper;
+import com.ems.android.basketcounter.room.Match;
 import com.ems.android.basketcounter.utils.NetworkReceiver;
 import com.facebook.CallbackManager;
 import com.facebook.share.model.ShareHashtag;
@@ -49,13 +46,13 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
     private CountDownTimer mCountDownTimer;
     private long mTimeRemaining;
     private boolean isTimerPaused;
-    private GameDbHelper mDbHelper;
     private NetworkReceiver mReceiver;
     private String mHomeName;
     private String mGuestName;
     private int mItemMenuSelected;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
+    private Match mMatchToSave;
 
     @BindView(R.id.tv_left_team)
     TextView mTvLeftTeam;
@@ -95,8 +92,10 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
             public void onAdClosed() {
                 switch (mItemMenuSelected) {
                     case R.id.save:
-                        Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        Intent intent = new Intent();
+                        intent.putExtra(getString(R.string.match_to_save), mMatchToSave);
+                        setResult(RESULT_OK, intent);
+                        finish();
                         break;
                     case R.id.share:
                         shareOnFacebook();
@@ -117,8 +116,6 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
             Intent intent = new Intent(DisplayActivity.this, MainActivity.class);
             startActivity(intent);
         }
-
-        mDbHelper = new GameDbHelper(this);
 
         Intent intent = getIntent();
         mHomeName = intent.getExtras().getString(getString(R.string.left_team), getString(R.string.left_team));
@@ -233,22 +230,22 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
      * @param view
      */
     public void addPointsLeft(View view) {
-       switch (view.getId()) {
-           case R.id.bt_three_points_left:
-               mScoreLeftTeam += 3;
-               break;
-           case R.id.bt_two_points_left:
-               mScoreLeftTeam += 2;
-               break;
-           case R.id.bt_free_throw_left:
-               mScoreLeftTeam++;
-               break;
-           case R.id.bt_minus_one_point_left:
-               if (mScoreLeftTeam > 0) {
-                   mScoreLeftTeam--;
-               }
-               break;
-       }
+        switch (view.getId()) {
+            case R.id.bt_three_points_left:
+                mScoreLeftTeam += 3;
+                break;
+            case R.id.bt_two_points_left:
+                mScoreLeftTeam += 2;
+                break;
+            case R.id.bt_free_throw_left:
+                mScoreLeftTeam++;
+                break;
+            case R.id.bt_minus_one_point_left:
+                if (mScoreLeftTeam > 0) {
+                    mScoreLeftTeam--;
+                }
+                break;
+        }
         mTvLeftScore.setText(String.valueOf(mScoreLeftTeam));
     }
 
@@ -390,36 +387,22 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         }
     }
 
-    /**
-     * Saves the game in the database
-     */
     private void saveGame() {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date currentDate = new Date();
         String date = dateFormat.format(currentDate);
+        String homeTeam = mTvLeftTeam.getText().toString();
+        String guestTeam = mTvRightTeam.getText().toString();
+        String homePoints = String.valueOf(mScoreLeftTeam);
+        String guestPoints = String.valueOf(mScoreRightTeam);
+        mMatchToSave = new Match(0, date, homeTeam, guestTeam, homePoints, guestPoints);
 
-        ContentValues values = new ContentValues();
-        values.put(GameEntry.COLUMN_DATE, date);
-        values.put(GameEntry.COLUMN_HOME_TEAM, mTvLeftTeam.getText().toString());
-        values.put(GameEntry.COLUMN_GUEST_TEAM, mTvRightTeam.getText().toString());
-        values.put(GameEntry.COLUMN_HOME_POINTS, String.valueOf(mScoreLeftTeam));
-        values.put(GameEntry.COLUMN_GUEST_POINTS, String.valueOf(mScoreRightTeam));
+        mInterstitial.show();
 
-        long newRowId = db.insert(GameEntry.TABLE_NAME, null, values);
-
-        if (newRowId > -1) {
-            Toast.makeText(DisplayActivity.this, getString(R.string.game_saved), Toast.LENGTH_SHORT).show();
-            mInterstitial.show();
-        } else {
-            Toast.makeText(DisplayActivity.this, getString(R.string.error_saving_game), Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
     protected void onDestroy() {
-        mDbHelper.close();
         super.onDestroy();
         if (mReceiver != null) {
             unregisterReceiver(mReceiver);

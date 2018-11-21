@@ -67,7 +67,9 @@ public class ConfigActivity extends AppCompatActivity {
                 intent.putExtra(getString(R.string.right_team), mRightTeamString);
                 intent.putExtra(getString(R.string.time_per_quarter), mTimeString);
                 intent.putExtra(getString(R.string.bonus_situation), mBonusString);
+                intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                 startActivity(intent);
+                finish();
             }
         });
     }
