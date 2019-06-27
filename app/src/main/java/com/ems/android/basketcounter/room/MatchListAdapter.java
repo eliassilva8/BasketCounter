@@ -1,18 +1,17 @@
 package com.ems.android.basketcounter.room;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ems.android.basketcounter.R;
+import com.ems.android.basketcounter.databinding.MatchItemBinding;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Elias on 20/11/2018.
@@ -33,22 +32,23 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.Matc
 
     @Override
     public MatchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.match_item, parent, false);
-        return new MatchViewHolder(itemView);
+        MatchItemBinding binding = DataBindingUtil.inflate(mInflater, R.layout.match_item, parent, false);
+        return new MatchViewHolder(binding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(MatchViewHolder holder, int position) {
         if (mMatches != null) {
             Match current = mMatches.get(position);
-            holder.mDateItem.setText(current.getDate());
-            holder.mHomeNameItem.setText(current.getHomeTeamName());
-            holder.mGuestNameItem.setText(current.getGuestTeamName());
-            holder.mHomePointsItem.setText(current.getHomeTeamPoints());
-            holder.mGuestPointsItem.setText(current.getGuestTeamPoints());
+
+            holder.mBinding.dateLv.setText(current.getDate());
+            holder.mBinding.homeTeamNameLv.setText(current.getHomeTeamName());
+            holder.mBinding.guestTeamNameLv.setText(current.getGuestTeamName());
+            holder.mBinding.homeTeamPointsLv.setText(current.getHomeTeamPoints());
+            holder.mBinding.guestTeamPointsLv.setText(current.getGuestTeamPoints());
         } else {
             // Covers the case of data not being ready yet.
-            holder.mDateItem.setText("No match");
+            holder.mBinding.dateLv.setText("No match");
         }
     }
 
@@ -67,20 +67,10 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.Matc
     }
 
     class MatchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.date_lv)
-        TextView mDateItem;
-        @BindView(R.id.home_team_name_lv)
-        TextView mHomeNameItem;
-        @BindView(R.id.guest_team_name_lv)
-        TextView mGuestNameItem;
-        @BindView(R.id.home_team_points_lv)
-        TextView mHomePointsItem;
-        @BindView(R.id.guest_team_points_lv)
-        TextView mGuestPointsItem;
-
+        private MatchItemBinding mBinding;
         private MatchViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            mBinding = DataBindingUtil.bind(itemView);
             itemView.setOnClickListener(this);
         }
 

@@ -5,14 +5,16 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import com.ems.android.basketcounter.R;
+import com.ems.android.basketcounter.databinding.ActivityDetailsBinding;
 import com.ems.android.basketcounter.room.Match;
 import com.ems.android.basketcounter.utils.NetworkReceiver;
 import com.facebook.CallbackManager;
@@ -21,29 +23,11 @@ import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
 import bolts.AppLinks;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class DetailsActivity extends AppCompatActivity implements NetworkReceiver.NetworkReceiverListener {
-    @BindView(R.id.date_details_activity)
-    TextView mDate;
-    @BindView(R.id.tv_left_team_details)
-    TextView mHomeName;
-    @BindView(R.id.tv_right_team_details)
-    TextView mGuestName;
-    @BindView(R.id.tv_score_left_details)
-    TextView mHomeScore;
-    @BindView(R.id.tv_score_right_details)
-    TextView mGuestScore;
-    @BindView(R.id.winner_text)
-    TextView mWinnerString;
-    @BindView(R.id.adView_details)
-    AdView mDetailsAdView;
-
     Match mMatch;
     private InterstitialAd mInterstitial;
     private NetworkReceiver mReceiver;
@@ -54,12 +38,13 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
     private int mItemMenuSelected;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
+    private ActivityDetailsBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
-        ButterKnife.bind(this);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
@@ -83,11 +68,6 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
                         break;
                 }
             }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                Toast.makeText(DetailsActivity.this, getString(R.string.action_cannot_be_executed), Toast.LENGTH_SHORT).show();
-            }
         });
 
         callbackManager = CallbackManager.Factory.create();
@@ -106,21 +86,27 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
         mHomeScoreString = mMatch.getHomeTeamPoints();
         mGuestScoreString = mMatch.getGuestTeamPoints();
 
-        mDate.setText(mMatch.getDate());
-        mHomeName.setText(mHomeNameString);
-        mGuestName.setText(mGuestNameString);
-        mHomeScore.setText(mHomeScoreString);
-        mGuestScore.setText(mGuestScoreString);
+        mBinding.dateDetailsActivity.setText(mMatch.getDate());
+        mBinding.tvLeftTeamDetails.setText(mHomeNameString);
+        mBinding.tvRightTeamDetails.setText(mGuestNameString);
+        mBinding.tvScoreLeftDetails.setText(mHomeScoreString);
+        mBinding.tvScoreRightDetails.setText(mGuestScoreString);
 
         int homeScore = Integer.parseInt(mMatch.getHomeTeamPoints());
         int guestScore = Integer.parseInt(mMatch.getGuestTeamPoints());
         if (homeScore > guestScore) {
-            mWinnerString.setText(mMatch.getHomeTeamName() + " " + getString(R.string.won));
+            mBinding.winnerText.setText(mMatch.getHomeTeamName() + " " + getString(R.string.won));
         } else if (homeScore < guestScore) {
-            mWinnerString.setText(mMatch.getGuestTeamName() + " " + getString(R.string.won));
+            mBinding.winnerText.setText(mMatch.getGuestTeamName() + " " + getString(R.string.won));
         } else {
-            mWinnerString.setText(getString(R.string.draw));
+            mBinding.winnerText.setText(getString(R.string.draw));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override
@@ -165,6 +151,8 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
                     if (mInterstitial.isLoaded()) {
                         mItemMenuSelected = R.id.delete;
                         mInterstitial.show();
+                    } else {
+                        Toast.makeText(DetailsActivity.this, getString(R.string.action_cannot_be_executed), Toast.LENGTH_SHORT).show();
                     }
                     return true;
                 } else {
@@ -175,6 +163,8 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
                     if (mInterstitial.isLoaded()) {
                         mItemMenuSelected = R.id.share;
                         mInterstitial.show();
+                    } else {
+                        Toast.makeText(DetailsActivity.this, getString(R.string.action_cannot_be_executed), Toast.LENGTH_SHORT).show();
                     }
                     return true;
                 } else {
@@ -192,7 +182,7 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
             mInterstitial.loadAd(adInterstitialRequest);
 
             AdRequest adBannerRequest = new AdRequest.Builder().build();
-            mDetailsAdView.loadAd(adBannerRequest);
+            mBinding.adViewDetails.loadAd(adBannerRequest);
         }
     }
 
@@ -205,8 +195,8 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
                     .setQuote(getString(R.string.final_result) + "\n" + mHomeNameString + " - " + mHomeScoreString + " | " + mGuestNameString + " - " + mGuestScoreString)
                     .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.ems.android.basketcounter"))
                     .setShareHashtag(new ShareHashtag.Builder()
-                        .setHashtag("#BasketCounter")
-                        .build())
+                            .setHashtag("#BasketCounter")
+                            .build())
                     .build();
             shareDialog.show(linkContent);
         }

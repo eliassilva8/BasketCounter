@@ -8,56 +8,28 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:70080258094:android:e22fb05040d1065c",
-        "android_client_info": {
-          "package_name": "com.example.android.courtcounter"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "70080258094-p2qlrran3vjc64s8uhf55irj15v5o6ei.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.android.courtcounter",
-            "certificate_hash": "4422664baf17ff705e7215e0e7072d15f88151eb"
-          }
-        },
-        {
-          "client_id": "70080258094-a8l7hklmnptr3cr80pse1bb4ut82nhd5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDUSt0A9wP_rAa6lh_f6cJZCuwLR5Kft6E"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "70080258094-a8l7hklmnptr3cr80pse1bb4ut82nhd5.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:70080258094:android:a9e79fe3fb7bd79b",
         "android_client_info": {
           "package_name": "com.ems.android.basketcounter"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "70080258094-2vfoa8siggt7i3lrlcsqt063cuojvhgf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ems.android.basketcounter",
+            "certificate_hash": "17b7a298e5b628a3a96d36715ada727153a57aff"
+          }
+        },
+        {
+          "client_id": "70080258094-rp2pvmvhgd9tmr7fi3fcptmb3gjd7str.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ems.android.basketcounter",
+            "certificate_hash": "abf0df9347c5b5c05ecce8df0c9ed351da07c6ee"
+          }
+        },
         {
           "client_id": "70080258094-bt90p1dcngvm4pj9h5erv1a64m8itg1g.apps.googleusercontent.com",
           "client_type": 1,
@@ -77,20 +49,80 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "70080258094-a8l7hklmnptr3cr80pse1bb4ut82nhd5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-7487555387883892~3043909438"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70080258094:android:69bf1a63f9bef2bf",
+        "android_client_info": {
+          "package_name": "com.ems.android.basketcounter.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70080258094-a8l7hklmnptr3cr80pse1bb4ut82nhd5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUSt0A9wP_rAa6lh_f6cJZCuwLR5Kft6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70080258094-a8l7hklmnptr3cr80pse1bb4ut82nhd5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70080258094:android:e83070695608039f",
+        "android_client_info": {
+          "package_name": "com.ems.android.basketcounter.paid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70080258094-apdm8qm3ae331gf75e5arsfdcbr2dlm9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ems.android.basketcounter.paid",
+            "certificate_hash": "4422664baf17ff705e7215e0e7072d15f88151eb"
+          }
         },
-        "ads_service": {
-          "status": 2
+        {
+          "client_id": "70080258094-a8l7hklmnptr3cr80pse1bb4ut82nhd5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUSt0A9wP_rAa6lh_f6cJZCuwLR5Kft6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70080258094-a8l7hklmnptr3cr80pse1bb4ut82nhd5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

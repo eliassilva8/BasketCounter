@@ -6,16 +6,17 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import com.ems.android.basketcounter.R;
+import com.ems.android.basketcounter.databinding.ActivityDisplayBinding;
 import com.ems.android.basketcounter.room.Match;
 import com.ems.android.basketcounter.utils.NetworkReceiver;
 import com.facebook.CallbackManager;
@@ -31,8 +32,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import bolts.AppLinks;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class DisplayActivity extends AppCompatActivity implements NetworkReceiver.NetworkReceiverListener {
     private int mScoreLeftTeam = 0;
@@ -53,33 +52,13 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
     CallbackManager callbackManager;
     ShareDialog shareDialog;
     private Match mMatchToSave;
-
-    @BindView(R.id.tv_left_team)
-    TextView mTvLeftTeam;
-    @BindView(R.id.tv_right_team)
-    TextView mTvRightTeam;
-    @BindView(R.id.tv_score_left)
-    TextView mTvLeftScore;
-    @BindView(R.id.tv_score_right)
-    TextView mTvRightScore;
-    @BindView(R.id.tv_quarter_time_display)
-    TextView mTvTimer;
-    @BindView(R.id.tv_foul_left)
-    TextView tvFoulsLeft;
-    @BindView(R.id.tv_foul_right)
-    TextView tvFoulsRight;
-    @BindView(R.id.bt_pause_timer)
-    ImageButton btPauseTimer;
-    @BindView(R.id.bt_play_timer)
-    ImageButton btPlayTimer;
-    @BindView(R.id.quarter_tv)
-    TextView mQuarterTv;
+    private ActivityDisplayBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display);
-        ButterKnife.bind(this);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_display);
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
@@ -102,11 +81,6 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
                         break;
                 }
             }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                Toast.makeText(DisplayActivity.this, getString(R.string.action_cannot_be_executed), Toast.LENGTH_SHORT).show();
-            }
         });
 
         callbackManager = CallbackManager.Factory.create();
@@ -120,13 +94,19 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         Intent intent = getIntent();
         mHomeName = intent.getExtras().getString(getString(R.string.left_team), getString(R.string.left_team));
         mGuestName = intent.getExtras().getString(getString(R.string.right_team), getString(R.string.right_team));
-        mTvLeftTeam.setText(mHomeName);
-        mTvRightTeam.setText(mGuestName);
+        mBinding.tvLeftTeam.setText(mHomeName);
+        mBinding.tvRightTeam.setText(mGuestName);
         mBonusSituation = Integer.parseInt(intent.getExtras().getString(getString(R.string.bonus_situation), "4"));
         String timeString = intent.getExtras().getString(getString(R.string.time_per_quarter), "10");
         mQuarterTime = minutesToMilliseconds(timeString);
-        mTvTimer.setText(formatTime(mQuarterTime));
-        btPauseTimer.setVisibility(View.INVISIBLE);
+        mBinding.tvQuarterTimeDisplay.setText(formatTime(mQuarterTime));
+        mBinding.btPauseTimer.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override
@@ -154,22 +134,21 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
 
         mCountDownTimer = new CountDownTimer(time, 1000) {
             public void onTick(long millisUntilFinished) {
-                mTvTimer.setText(formatTime(millisUntilFinished));
+                mBinding.tvQuarterTimeDisplay.setText(formatTime(millisUntilFinished));
                 mTimeRemaining = millisUntilFinished;
             }
 
             public void onFinish() {
-                mTvTimer.setText(formatTime(mQuarterTime));
-                btPauseTimer.setVisibility(View.INVISIBLE);
-                btPlayTimer.setVisibility(View.VISIBLE);
+                mBinding.tvQuarterTimeDisplay.setText(formatTime(mQuarterTime));
+                mBinding.btPauseTimer.setVisibility(View.INVISIBLE);
+                mBinding.btPlayTimer.setVisibility(View.VISIBLE);
             }
         };
     }
 
     public void playTimer(View view) {
-        btPlayTimer = findViewById(R.id.bt_play_timer);
-        btPlayTimer.setVisibility(View.INVISIBLE);
-        btPauseTimer.setVisibility(View.VISIBLE);
+        mBinding.btPlayTimer.setVisibility(View.INVISIBLE);
+        mBinding.btPauseTimer.setVisibility(View.VISIBLE);
 
         if (isTimerPaused) {
             createTimer(mTimeRemaining);
@@ -182,8 +161,8 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
     public void pauseTimer(View view) {
         mCountDownTimer.cancel();
         isTimerPaused = true;
-        btPlayTimer.setVisibility(View.VISIBLE);
-        btPauseTimer.setVisibility(View.INVISIBLE);
+        mBinding.btPlayTimer.setVisibility(View.VISIBLE);
+        mBinding.btPauseTimer.setVisibility(View.INVISIBLE);
     }
 
     public void restartTimer(View view) {
@@ -192,9 +171,9 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         }
         mCountDownTimer.cancel();
         createTimer(mQuarterTime);
-        btPlayTimer.setVisibility(View.VISIBLE);
-        btPauseTimer.setVisibility(View.INVISIBLE);
-        mTvTimer.setText(formatTime(mQuarterTime));
+        mBinding.btPlayTimer.setVisibility(View.VISIBLE);
+        mBinding.btPauseTimer.setVisibility(View.INVISIBLE);
+        mBinding.tvQuarterTimeDisplay.setText(formatTime(mQuarterTime));
         isTimerPaused = false;
     }
 
@@ -246,7 +225,7 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
                 }
                 break;
         }
-        mTvLeftScore.setText(String.valueOf(mScoreLeftTeam));
+        mBinding.tvScoreLeft.setText(String.valueOf(mScoreLeftTeam));
     }
 
     /**
@@ -271,7 +250,7 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
                 }
                 break;
         }
-        mTvRightScore.setText(String.valueOf(mScoreRightTeam));
+        mBinding.tvScoreRight.setText(String.valueOf(mScoreRightTeam));
     }
 
     /**
@@ -283,20 +262,20 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         if (view.getId() == R.id.bt_foul_left) {
             mFoulsLeftTeam++;
             if (mFoulsLeftTeam >= mBonusSituation) {
-                tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                mBinding.tvFoulLeft.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 mFoulsLeftTeam = mBonusSituation;
             }
         } else {
             if (mFoulsLeftTeam > 0) {
                 mFoulsLeftTeam--;
                 if (mFoulsLeftTeam < mBonusSituation) {
-                    tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+                    mBinding.tvFoulLeft.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
                 } else {
-                    tvFoulsLeft.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    mBinding.tvFoulLeft.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 }
             }
         }
-        tvFoulsLeft.setText(String.valueOf(mFoulsLeftTeam));
+        mBinding.tvFoulLeft.setText(String.valueOf(mFoulsLeftTeam));
     }
 
     /**
@@ -308,20 +287,20 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         if (view.getId() == R.id.bt_foul_right) {
             mFoulsRightTeam++;
             if (mFoulsRightTeam >= mBonusSituation) {
-                tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                mBinding.tvFoulRight.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 mFoulsRightTeam = mBonusSituation;
             }
         } else {
             if (mFoulsRightTeam > 0) {
                 mFoulsRightTeam--;
                 if (mFoulsRightTeam < mBonusSituation) {
-                    tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+                    mBinding.tvFoulRight.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
                 } else {
-                    tvFoulsRight.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    mBinding.tvFoulRight.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 }
             }
         }
-        tvFoulsRight.setText(String.valueOf(mFoulsRightTeam));
+        mBinding.tvFoulRight.setText(String.valueOf(mFoulsRightTeam));
     }
 
     public void quarterButtonClicked(View view) {
@@ -335,9 +314,9 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
 
     public void displayQuarter() {
         if (mQuarter == 5) {
-            mQuarterTv.setText(getString(R.string.over_time));
+            mBinding.quarterTv.setText(getString(R.string.over_time));
         } else {
-            mQuarterTv.setText(String.valueOf(mQuarter) + getString(R.string.quarter));
+            mBinding.quarterTv.setText(String.valueOf(mQuarter) + getString(R.string.quarter));
         }
     }
 
@@ -367,6 +346,8 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
                     if (mInterstitial.isLoaded()) {
                         mItemMenuSelected = R.id.save;
                         saveGame();
+                    } else {
+                        Toast.makeText(DisplayActivity.this, getString(R.string.action_cannot_be_executed), Toast.LENGTH_SHORT).show();
                     }
                     return true;
                 } else {
@@ -377,6 +358,8 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
                     if (mInterstitial.isLoaded()) {
                         mItemMenuSelected = R.id.share;
                         mInterstitial.show();
+                    } else {
+                        Toast.makeText(DisplayActivity.this, getString(R.string.action_cannot_be_executed), Toast.LENGTH_SHORT).show();
                     }
                     return true;
                 } else {
@@ -391,8 +374,8 @@ public class DisplayActivity extends AppCompatActivity implements NetworkReceive
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date currentDate = new Date();
         String date = dateFormat.format(currentDate);
-        String homeTeam = mTvLeftTeam.getText().toString();
-        String guestTeam = mTvRightTeam.getText().toString();
+        String homeTeam = mBinding.tvLeftTeam.getText().toString();
+        String guestTeam = mBinding.tvRightTeam.getText().toString();
         String homePoints = String.valueOf(mScoreLeftTeam);
         String guestPoints = String.valueOf(mScoreRightTeam);
         mMatchToSave = new Match(0, date, homeTeam, guestTeam, homePoints, guestPoints);

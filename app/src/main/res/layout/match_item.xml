@@ -1,130 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/border"
-    android:layout_margin="@dimen/extra_small_margin"
-    android:paddingTop="@dimen/small_margin"
-    android:paddingBottom="@dimen/small_margin"
-    android:paddingStart="@dimen/small_margin"
-    android:paddingEnd="@dimen/small_margin">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/game_icon_iv"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/game_icon_description"
-        android:src="@mipmap/ic_logo_round"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/date_lv"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_margin="@dimen/extra_small_margin"
+        android:background="@drawable/border"
+        android:paddingStart="@dimen/small_margin"
+        android:paddingTop="@dimen/small_margin"
+        android:paddingEnd="@dimen/small_margin"
+        android:paddingBottom="@dimen/small_margin">
 
-    <TextView
-        android:id="@+id/date_lv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/extra_small_margin"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/game_icon_iv"
-        app:layout_constraintStart_toStartOf="@+id/game_icon_iv"
-        app:layout_constraintTop_toBottomOf="@+id/game_icon_iv"
-        tools:text="12/10/2018" />
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/game_icon_iv"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/home_team_name_lv"
+        <ImageView
+            android:id="@+id/game_icon_iv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_marginStart="8dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:padding="@dimen/extra_small_margin"
-            android:textSize="@dimen/item_text"
-            app:layout_constraintEnd_toStartOf="@+id/vs_label"
+            android:contentDescription="@string/game_icon_description"
+            android:src="@mipmap/ic_logo_round"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/date_lv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Benfica" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/home_team_points_lv"
-            android:layout_width="0dp"
+            android:id="@+id/date_lv"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:padding="@dimen/extra_small_margin"
-            android:textSize="@dimen/item_text"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/home_team_name_lv"
-            app:layout_constraintHorizontal_bias="0.486"
-            app:layout_constraintStart_toStartOf="@+id/home_team_name_lv"
-            tools:text="80" />
+            app:layout_constraintEnd_toEndOf="@+id/game_icon_iv"
+            app:layout_constraintStart_toStartOf="@+id/game_icon_iv"
+            app:layout_constraintTop_toBottomOf="@+id/game_icon_iv"
+            tools:text="12/10/2018" />
 
-        <TextView
-            android:id="@+id/vs_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="0dp"
-            android:text="@string/vs"
-            app:layout_constraintBottom_toTopOf="@+id/home_team_points_lv"
-            app:layout_constraintEnd_toStartOf="@+id/midle_line"
-            app:layout_constraintStart_toStartOf="@+id/midle_line"
-            app:layout_constraintTop_toBottomOf="@+id/home_team_name_lv" />
-
-        <TextView
-            android:id="@+id/guest_team_name_lv"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="@dimen/default_margin"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:padding="@dimen/extra_small_margin"
-            android:textSize="@dimen/item_text"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/vs_label"
-            app:layout_constraintTop_toTopOf="@+id/home_team_name_lv"
-            tools:text="Rebordosa" />
+            app:layout_constraintStart_toEndOf="@+id/game_icon_iv"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/guest_team_points_lv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/extra_small_margin"
-            android:textSize="@dimen/item_text"
-            app:layout_constraintBottom_toBottomOf="@+id/home_team_points_lv"
-            app:layout_constraintEnd_toEndOf="@+id/guest_team_name_lv"
-            app:layout_constraintStart_toStartOf="@+id/guest_team_name_lv"
-            app:layout_constraintTop_toTopOf="@+id/home_team_points_lv"
-            tools:text="81" />
+            <TextView
+                android:id="@+id/home_team_name_lv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="@dimen/extra_small_margin"
+                android:textSize="@dimen/item_text"
+                app:layout_constraintEnd_toStartOf="@+id/vs_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Benfica" />
+
+            <TextView
+                android:id="@+id/home_team_points_lv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/extra_small_margin"
+                android:textSize="@dimen/item_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/home_team_name_lv"
+                app:layout_constraintHorizontal_bias="0.486"
+                app:layout_constraintStart_toStartOf="@+id/home_team_name_lv"
+                tools:text="80" />
+
+            <TextView
+                android:id="@+id/vs_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:text="@string/vs"
+                app:layout_constraintBottom_toTopOf="@+id/home_team_points_lv"
+                app:layout_constraintEnd_toStartOf="@+id/midle_line"
+                app:layout_constraintStart_toStartOf="@+id/midle_line"
+                app:layout_constraintTop_toBottomOf="@+id/home_team_name_lv" />
+
+            <TextView
+                android:id="@+id/guest_team_name_lv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="@dimen/extra_small_margin"
+                android:textSize="@dimen/item_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/vs_label"
+                app:layout_constraintTop_toTopOf="@+id/home_team_name_lv"
+                tools:text="Rebordosa" />
+
+            <TextView
+                android:id="@+id/guest_team_points_lv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/extra_small_margin"
+                android:textSize="@dimen/item_text"
+                app:layout_constraintBottom_toBottomOf="@+id/home_team_points_lv"
+                app:layout_constraintEnd_toEndOf="@+id/guest_team_name_lv"
+                app:layout_constraintStart_toStartOf="@+id/guest_team_name_lv"
+                app:layout_constraintTop_toTopOf="@+id/home_team_points_lv"
+                tools:text="81" />
 
 
-        <android.support.constraint.Guideline
-            android:id="@+id/midle_line"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="187dp"
-            android:layout_marginStart="188dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_percent="0.5"
-            app:layout_constraintStart_toEndOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/midle_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="188dp"
+                android:layout_marginEnd="187dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_percent="0.5"
+                app:layout_constraintStart_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
