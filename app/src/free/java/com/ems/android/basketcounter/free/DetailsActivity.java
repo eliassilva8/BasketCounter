@@ -170,6 +170,8 @@ public class DetailsActivity extends AppCompatActivity implements NetworkReceive
                 } else {
                     Toast.makeText(DetailsActivity.this, getString(R.string.connect_to_internet), Toast.LENGTH_LONG).show();
                 }
+            case android.R.id.home:
+                setResult(RESULT_OK);
             default:
                 return super.onOptionsItemSelected(item);
         }
