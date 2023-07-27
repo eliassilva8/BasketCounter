@@ -9,9 +9,6 @@ android {
     defaultConfig {
         multiDexEnabled true
     }
-    lintOptions {
-        checkReleaseBuilds false
-    }
     signingConfigs {
         free {
             keyAlias 'free'
@@ -20,12 +17,11 @@ android {
             storePassword "${storePassword}"
         }
     }
-    compileSdkVersion 29
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 34
     defaultConfig {
         applicationId "com.ems.android.basketcounter"
         minSdkVersion 17
-        targetSdkVersion 29
+        targetSdkVersion 34
         versionCode 11
         versionName "2.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -68,7 +64,12 @@ android {
             versionName '1.0'
         }
     }
+
     sourceSets { main { java.srcDirs = ['src/main/java', 'src/test/java/'] } }
+    namespace 'com.ems.android.basketcounter'
+    lint {
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {
